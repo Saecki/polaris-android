@@ -21,10 +21,17 @@
         <item name="colorHeaderTextPrimary">@color/headerTextPrimary</item>
         <item name="colorHeaderTextSecondary">@color/headerTextSecondary</item>
         <item name="colorDialogDivider">@color/dialogDivider</item>
+        <item name="colorDivider">@color/divider</item>
 
         <item name="dialogCornerRadius">8dp</item>
 
         <item name="navigationViewStyle">@style/BackdropNavigation</item>
+    </style>
+
+    <style name="Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?colorDivider</item>
     </style>
 
     <style name="DialogDivider">

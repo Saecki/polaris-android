@@ -7,7 +7,6 @@
     <color name="error">#F44336</color> <!--Red500-->
 
     <color name="playlistInstructions">@color/grey500</color>
-    <color name="discSeparator">@color/blueGrey100</color>
     <color name="navItemUnchecked">@color/blueGrey500</color>
     <color name="headerBackground">@color/blueGrey900</color>
     <color name="headerTextPrimary">@color/text_primary_dark</color>
@@ -21,6 +20,7 @@
     <color name="textSecondary">@color/text_secondary_light</color>
     <color name="background">#FFFFFF</color> <!-- White -->
     <color name="belowBackground">@color/grey200</color>
+    <color name="divider">@color/grey300</color>
     <color name="dialogDivider">@color/grey300</color>
 
     <color name="grey50">#FAFAFA</color>

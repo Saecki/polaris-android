@@ -50,16 +50,17 @@ class BrowseAdapterAlbum extends BrowseAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        int index = 0;
+        int currentDiscStart = 0;
         for (int discIndex = 0; discIndex < numDiscHeaders; discIndex++) {
-            if (position == index) {
+            int currentDiscSize = discSizes.valueAt(discIndex);
+            if (position == currentDiscStart) {
                 return DISC_HEADER.ordinal();
+            } else if (position < currentDiscStart + currentDiscSize + 1) {
+                return TRACK.ordinal();
             }
-            index += discSizes.valueAt(discIndex) + 1;
-            if (position < index) {
-                break;
-            }
+            currentDiscStart += currentDiscSize + 1;
         }
+
         return TRACK.ordinal();
     }
 
@@ -67,7 +68,7 @@ class BrowseAdapterAlbum extends BrowseAdapter {
     public BrowseItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemQueueStatusView = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_browse_item_queued, parent, false);
         if (viewType == DISC_HEADER.ordinal()) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_browse_album_disc, parent, false);
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_browse_album_disc_header, parent, false);
             return new BrowseItemHolderAlbumDiscHeader(api, playbackQueue, this, itemView, itemQueueStatusView);
         } else {
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_browse_album_item, parent, false);
@@ -82,27 +83,34 @@ class BrowseAdapterAlbum extends BrowseAdapter {
 
             // Assign track item
             if (numDiscHeaders > 0) {
-                int index = 0;
-                for (int discIndex = 0; discIndex < discSizes.size(); discIndex++) {
-                    if (position <= index) {
+                int offset = 1;
+                int currentDiscStart = 0;
+                for (int discIndex = 0; discIndex < numDiscHeaders; discIndex++) {
+                    int currentDiscSize = discSizes.valueAt(discIndex);
+                    if (position < currentDiscStart + currentDiscSize + 1) {
                         break;
                     }
-                    position--;
-                    index += discSizes.valueAt(discIndex);
+                    currentDiscStart += currentDiscSize + 1;
+                    offset += 1;
                 }
-            }
-            holder.bindItem(items.get(position));
 
-        } else {
+                holder.bindItem(items.get(position - offset));
+            } else {
+                holder.bindItem(items.get(position));
+            }
+        } else if (holder instanceof BrowseItemHolderAlbumDiscHeader) {
 
             // Assign disc number
             BrowseItemHolderAlbumDiscHeader header = (BrowseItemHolderAlbumDiscHeader) holder;
-            int index = 0;
-            for (int discIndex = 0; discIndex < discSizes.size(); discIndex++) {
-                if (position == index) {
+
+            int currentDiscStart = 0;
+            for (int discIndex = 0; discIndex < numDiscHeaders; discIndex++) {
+                int currentDiscSize = discSizes.valueAt(discIndex);
+                if (position == currentDiscStart) {
                     header.setDiscNumber(discSizes.keyAt(discIndex));
+                    break;
                 }
-                index += discSizes.valueAt(discIndex) + 1;
+                currentDiscStart += currentDiscSize + 1;
             }
         }
     }

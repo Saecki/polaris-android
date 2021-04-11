@@ -8,12 +8,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="100dp"
         android:orientation="horizontal">
 
         <com.google.android.material.card.MaterialCardView
-            android:layout_width="104dp"
-            android:layout_height="104dp"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
             android:layout_margin="8dp"
             app:cardCornerRadius="8dp"
             app:cardElevation="0dp">
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="vertical"
-            android:padding="15dp">
+            android:padding="16dp">
 
             <TextView
                 android:id="@+id/album_title"
@@ -52,11 +52,12 @@
                 android:textColor="?android:textColorSecondary"
                 android:textSize="16sp"
                 tools:text="Botanical" />
+
         </RelativeLayout>
 
     </LinearLayout>
 
-    <Space style="@style/DialogDivider" />
+    <View style="@style/Divider" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/browse_recycler_view"
