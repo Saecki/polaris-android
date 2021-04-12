@@ -1,63 +1,61 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/motion_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="agersant.polaris.features.browse.BrowseViewExplorer">
+    app:layoutDescription="@xml/view_browse_album_scene">
 
-    <LinearLayout
+    <View
+        android:id="@+id/header_background"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:background="?colorHeaderBackground"
+        app:layout_constraintBottom_toTopOf="@id/header_barrier"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="84dp"
-            android:layout_height="84dp"
-            android:layout_margin="8dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="0dp">
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/artwork_container"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp">
 
-            <ImageView
-                android:id="@+id/album_artwork"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/album_artwork"
-                tools:background="@drawable/artwork" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/album_artwork"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="match_parent"
+            android:contentDescription="@string/album_artwork"
+            tools:background="@drawable/artwork" />
 
-            <TextView
-                android:id="@+id/album_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:textColor="?android:textColorPrimary"
-                android:textSize="20sp"
-                tools:text="Calcium Engine" />
+    </com.google.android.material.card.MaterialCardView>
 
-            <TextView
-                android:id="@+id/album_artist"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/album_title"
-                android:textColor="?android:textColorSecondary"
-                android:textSize="16sp"
-                tools:text="Botanical" />
+    <TextView
+        android:id="@+id/album_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:paddingHorizontal="16dp"
+        android:textColor="?colorHeaderTextPrimary"
+        android:textSize="20sp"
+        tools:text="Calcium Engine" />
 
-        </RelativeLayout>
+    <TextView
+        android:id="@+id/album_artist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:textColor="?colorHeaderTextSecondary"
+        android:textSize="16sp"
+        tools:text="Botanical" />
 
-    </LinearLayout>
-
-    <View style="@style/Divider" />
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/header_barrier"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="artwork_container,album_title,album_artist" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/browse_recycler_view"
@@ -65,6 +63,9 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:scrollbars="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_barrier"
         tools:listitem="@layout/view_browse_album_item" />
 
-</LinearLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

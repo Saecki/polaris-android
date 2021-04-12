@@ -25,7 +25,12 @@
 
         <item name="dialogCornerRadius">8dp</item>
 
+        <item name="recyclerViewStyle">@style/RecyclerView</item>
         <item name="navigationViewStyle">@style/BackdropNavigation</item>
+    </style>
+
+    <style name="RecyclerView">
+        <item name="android:overScrollMode">never</item>
     </style>
 
     <style name="Divider">

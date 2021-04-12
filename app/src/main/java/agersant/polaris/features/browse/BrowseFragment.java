@@ -29,7 +29,6 @@ public class BrowseFragment extends Fragment {
 
     public static final String PATH = "PATH";
     public static final String NAVIGATION_MODE = "NAVIGATION_MODE";
-    private FragmentBrowseBinding binding;
     private ProgressBar progressBar;
     private View errorMessage;
     private ViewGroup contentHolder;
@@ -51,11 +50,11 @@ public class BrowseFragment extends Fragment {
         serverAPI = state.serverAPI;
         playbackQueue = state.playbackQueue;
 
-        binding = FragmentBrowseBinding.inflate(inflater);
+        FragmentBrowseBinding binding = FragmentBrowseBinding.inflate(inflater);
         errorMessage = binding.browseErrorMessage;
         progressBar = binding.progressBar;
         contentHolder = binding.browseContentHolder;
-        toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar = requireActivity().findViewById(R.id.toolbar);
 
         binding.browseErrorRetry.setOnClickListener((view) -> loadContent());
 
