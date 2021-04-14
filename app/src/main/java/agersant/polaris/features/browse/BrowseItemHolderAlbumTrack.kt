@@ -31,5 +31,4 @@ internal class BrowseItemHolderAlbumTrack(
         titleText.text = item.title ?: item.name
         artistText.text = item.artist ?: ""
     }
-
 }

@@ -32,6 +32,7 @@ private class BrowseViewAlbum(
     private val artwork: ImageView
     private val artist: TextView
     private val title: TextView
+    private val divider: View?
 
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -40,6 +41,7 @@ private class BrowseViewAlbum(
         artwork = binding.albumArtwork
         artist = binding.albumArtist
         title = binding.albumTitle
+        divider = binding.root.findViewById(R.id.header_divider)
 
         val recyclerView = binding.browseRecyclerView
         recyclerView.setHasFixedSize(true)
@@ -50,9 +52,9 @@ private class BrowseViewAlbum(
         recyclerView.adapter = adapter
         recyclerView.setOnScrollChangeListener { v, _, _, _, _ ->
             if (v.canScrollVertically(-1)) {
-                binding.headerDivider.visibility = VISIBLE
+                divider?.visibility = VISIBLE
             } else {
-                binding.headerDivider.visibility = INVISIBLE
+                divider?.visibility = INVISIBLE
             }
         }
     }
