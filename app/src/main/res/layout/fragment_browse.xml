@@ -40,10 +40,8 @@
             android:id="@+id/browse_error_retry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="0dp"
-            android:minHeight="0dp"
-            android:text="@string/browse_error_retry"
-            android:textColor="?android:textColorPrimary" />
+            android:text="@string/browse_error_retry" />
+
     </LinearLayout>
 
     <FrameLayout

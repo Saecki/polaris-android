@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#039BE5</color> <!--LightBlue600-->
-    <color name="primaryVariant">#0277BD</color> <!--LightBlue800-->
+    <color name="primary">#3D5AFE</color> <!--IndigoA400-->
+    <color name="primaryVariant">#304FFE</color> <!--IndigoA700-->
+    <color name="onPrimary">@color/grey50</color> <!--Grey50-->
     <color name="accent">#EC407A</color> <!--Pink400-->
     <color name="onAccent">#F8BBD0</color> <!--Pink100-->
     <color name="error">#F44336</color> <!--Red500-->
 
     <color name="playlistInstructions">@color/grey500</color>
     <color name="navItemUnchecked">@color/blueGrey500</color>
-    <color name="headerBackground">@color/blueGrey300</color>
+    <color name="headerBackground">#9FA8DA</color> <!--TODO-->
     <color name="headerTextPrimary">@color/text_primary_dark</color>
     <color name="headerTextSecondary">@color/text_secondary_dark</color>
     <color name="toolbarTitle">@color/grey50</color>

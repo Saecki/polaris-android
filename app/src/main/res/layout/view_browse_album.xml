@@ -10,7 +10,7 @@
         android:id="@+id/header_background"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="?colorHeaderBackground"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toTopOf="@id/header_barrier"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -19,7 +19,7 @@
         android:layout_width="220dp"
         android:layout_height="220dp"
         app:cardCornerRadius="8dp"
-        app:cardElevation="0dp">
+        app:cardElevation="8dp">
 
         <ImageView
             android:id="@+id/album_artwork"
@@ -37,7 +37,7 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:paddingHorizontal="16dp"
-        android:textColor="?colorHeaderTextPrimary"
+        android:textColor="?android:textColorPrimary"
         android:textSize="20sp"
         tools:text="Calcium Engine" />
 
@@ -45,8 +45,10 @@
         android:id="@+id/album_artist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:paddingHorizontal="16dp"
-        android:textColor="?colorHeaderTextSecondary"
+        android:textColor="?android:textColorSecondary"
         android:textSize="16sp"
         tools:text="Botanical" />
 
@@ -57,6 +59,12 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="artwork_container,album_title,album_artist" />
 
+    <View
+        android:id="@+id/header_divider"
+        style="@style/Divider"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/header_barrier" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/browse_recycler_view"
         android:layout_width="match_parent"
@@ -65,7 +73,7 @@
         android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header_barrier"
+        app:layout_constraintTop_toBottomOf="@id/header_divider"
         tools:listitem="@layout/view_browse_album_item" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

@@ -10,6 +10,7 @@
         <item name="colorPrimary">@color/primary</item> <!--Task manager toolbar-->
         <item name="colorPrimaryDark">@color/primaryVariant</item>
         <item name="colorPrimaryVariant">@color/primaryVariant</item>
+        <item name="colorOnPrimary">@color/onPrimary</item>
         <item name="colorAccent">@color/primary</item> <!--Media player seek bar-->
         <item name="colorSecondary">@color/primary</item>
         <item name="colorSecondaryVariant">@color/primaryVariant</item>
