@@ -37,7 +37,6 @@ public class BrowseViewExplorer extends BrowseViewContent {
 
         RecyclerView recyclerView = findViewById(R.id.browse_recycler_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         ItemTouchHelper.Callback callback = new BrowseTouchCallback();
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
