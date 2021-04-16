@@ -32,6 +32,7 @@
 
     <style name="RecyclerView">
         <item name="android:overScrollMode">never</item>
+        <item name="android:scrollbars">none</item>
     </style>
 
     <style name="HorizontalDivider">
