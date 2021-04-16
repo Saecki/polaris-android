@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
@@ -14,6 +15,7 @@ import agersant.polaris.PolarisPlayer;
 import agersant.polaris.R;
 import agersant.polaris.api.local.OfflineCache;
 import agersant.polaris.api.remote.DownloadQueue;
+import agersant.polaris.util.UtilKt;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -36,6 +38,8 @@ class QueueAdapter
     @Override
     public QueueAdapter.QueueItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         QueueItemView queueItemView = new QueueItemView(parent.getContext());
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        queueItemView.setLayoutParams(params);
         return new QueueAdapter.QueueItemHolder(queueItemView, player, offlineCache, downloadQueue);
     }
 
@@ -64,6 +68,7 @@ class QueueAdapter
         private final QueueItemView queueItemView;
         private final TextView titleText;
         private final TextView artistText;
+        private final TextView durationText;
         private final ImageView cacheIcon;
         private final ImageView downloadIcon;
         private final PolarisPlayer player;
@@ -81,6 +86,7 @@ class QueueAdapter
             this.downloadQueue = downloadQueue;
             titleText = queueItemView.findViewById(R.id.title);
             artistText = queueItemView.findViewById(R.id.artist);
+            durationText = queueItemView.findViewById(R.id.duration);
             cacheIcon = queueItemView.findViewById(R.id.cache_icon);
             downloadIcon = queueItemView.findViewById(R.id.download_icon);
             queueItemView.setOnClickListener(this);
@@ -137,6 +143,11 @@ class QueueAdapter
             if (isNewItem) {
                 titleText.setText(item.getTitle());
                 artistText.setText(item.getArtist());
+                if (item.getDuration() != -1) {
+                    durationText.setText(UtilKt.formatTime(item.getDuration()));
+                } else {
+                    durationText.setText("");
+                }
                 setState(QueueItemState.IDLE);
             }
 
