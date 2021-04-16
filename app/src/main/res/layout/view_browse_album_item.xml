@@ -12,24 +12,24 @@
         android:layout_height="wrap_content"
         android:textAlignment="textEnd"
         android:textColor="?android:textColorPrimary"
-        android:textSize="18sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="02." />
+        tools:text="02" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="12dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:textColor="?android:textColorPrimary"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@id/artist"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/duration"
         app:layout_constraintStart_toEndOf="@id/track_number"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
@@ -40,16 +40,27 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="12dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:textColor="?android:textColorSecondary"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/duration"
         app:layout_constraintStart_toEndOf="@id/track_number"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Dawn of Victory" />
+        tools:text="Rhapsody of Fire" />
+
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="12sp"
+        app:layout_constraintBaseline_toBaselineOf="@id/artist"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="4:47" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
