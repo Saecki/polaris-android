@@ -15,8 +15,8 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/artwork_container"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp">
 
@@ -60,7 +60,7 @@
 
     <View
         android:id="@+id/header_divider"
-        style="@style/Divider"
+        style="@style/HorizontalDivider"
         android:visibility="invisible"
         app:layout_constraintTop_toBottomOf="@id/header_barrier" />
 
