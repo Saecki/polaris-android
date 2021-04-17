@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <View
-        android:id="@+id/header_background"
+        android:id="@+id/sidebar_background"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
@@ -40,6 +40,7 @@
         android:id="@+id/album_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginTop="4dp"
         android:ellipsize="end"
         android:maxLines="2"
@@ -57,6 +58,7 @@
         android:id="@+id/album_artist"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
         android:layout_marginBottom="8dp"
         android:maxLines="1"
         android:textAlignment="center"
@@ -76,22 +78,14 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.45" />
 
-    <View
-        android:id="@+id/sidebar_divider"
-        style="@style/VerticalDivider"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/sidebar_guide"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/browse_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/sidebar_divider"
+        app:layout_constraintStart_toEndOf="@id/sidebar_guide"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/view_browse_album_item" />
 

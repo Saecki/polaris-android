@@ -2,22 +2,21 @@ package agersant.polaris.features.browse
 
 import agersant.polaris.CollectionItem
 import agersant.polaris.PlaybackQueue
-import agersant.polaris.PolarisApplication
 import agersant.polaris.R
 
 import agersant.polaris.api.API
 import agersant.polaris.databinding.ViewBrowseAlbumBinding
-import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
 @SuppressLint("ViewConstructor")
@@ -28,7 +27,9 @@ private class BrowseViewAlbum(
 ) : BrowseViewContent(context) {
 
     private val adapter: BrowseAdapter
-    private val headerBackground: View
+    private val motionLayout: MotionLayout?
+    private val headerBackground: View?
+    private val sidebarBackground: View?
     private val artwork: ImageView
     private val artist: TextView
     private val title: TextView
@@ -37,19 +38,24 @@ private class BrowseViewAlbum(
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val binding = ViewBrowseAlbumBinding.inflate(inflater, this, true)
+        motionLayout = binding.motionLayout
         headerBackground = binding.headerBackground
+        sidebarBackground = binding.sidebarBackground
         artwork = binding.albumArtwork
         artist = binding.albumArtist
         title = binding.albumTitle
-        divider = binding.root.findViewById(R.id.header_divider)
+        divider = binding.headerDivider
 
         val recyclerView = binding.browseRecyclerView
         recyclerView.setHasFixedSize(true)
+
         val callback: ItemTouchHelper.Callback = BrowseTouchCallback()
         val itemTouchHelper = ItemTouchHelper(callback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
+
         adapter = BrowseAdapterAlbum(api, playbackQueue)
         recyclerView.adapter = adapter
+
         recyclerView.setOnScrollChangeListener { v, _, _, _, _ ->
             if (v.canScrollVertically(-1)) {
                 divider?.visibility = VISIBLE
@@ -57,6 +63,27 @@ private class BrowseViewAlbum(
                 divider?.visibility = INVISIBLE
             }
         }
+
+        motionLayout?.addTransitionListener(object : MotionLayout.TransitionListener {
+            override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) = Unit
+            override fun onTransitionCompleted(p0: MotionLayout?, id: Int) {
+                if (id == R.id.start) {
+                    title.textAlignment = TEXT_ALIGNMENT_CENTER
+                } else {
+                    title.textAlignment = TEXT_ALIGNMENT_TEXT_START
+                }
+            }
+
+            override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) = Unit
+
+            override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, progress: Float) {
+                if (progress > 0.8f) {
+                    title.textAlignment = TEXT_ALIGNMENT_TEXT_START
+                } else {
+                    title.textAlignment = TEXT_ALIGNMENT_CENTER
+                }
+            }
+        })
     }
 
     public override fun setItems(items: ArrayList<out CollectionItem>) {
@@ -86,19 +113,23 @@ private class BrowseViewAlbum(
                     }
 
                     swatch?.run {
-                        val oldBg = 0
-                        val newBg = rgb
-                        val oldPrimary = title.textColors.defaultColor
-                        val newPrimary = titleTextColor
-                        val oldSecondary = artist.textColors.defaultColor
-                        val newSecondary = bodyTextColor
-                        val evaluator = ArgbEvaluator()
-                        val animator = ValueAnimator.ofFloat(0f, 1f)
+                        val animator = ValueAnimator.ofArgb(0, rgb)
+                        var gradientDrawable: GradientDrawable? = null
+                        headerBackground?.let {
+                            val drawable = GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(0, 0))
+                            drawable.alpha = 0xA0
+                            it.background = drawable
+                            gradientDrawable = drawable
+                        }
+                        sidebarBackground?.let {
+                            val drawable = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, intArrayOf(0, 0))
+                            drawable.alpha = 0xA0
+                            it.background = drawable
+                            gradientDrawable = drawable
+                        }
                         animator.addUpdateListener {
-                            val f = it.animatedFraction
-                            headerBackground.setBackgroundColor(evaluator.evaluate(f, oldBg, newBg) as Int)
-                            title.setTextColor(evaluator.evaluate(f, oldPrimary, newPrimary) as Int)
-                            artist.setTextColor(evaluator.evaluate(f, oldSecondary, newSecondary) as Int)
+                            val bg = it.animatedValue as Int
+                            gradientDrawable?.colors = intArrayOf(bg, 0)
                         }
                         animator.duration = 250
                         animator.start()
