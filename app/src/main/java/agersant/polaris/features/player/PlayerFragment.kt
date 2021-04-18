@@ -1,9 +1,6 @@
 package agersant.polaris.features.player
 
-import agersant.polaris.PlaybackQueue
-import agersant.polaris.PolarisApplication
-import agersant.polaris.PolarisPlayer
-import agersant.polaris.R
+import agersant.polaris.*
 import agersant.polaris.api.API
 import agersant.polaris.databinding.FragmentPlayerBinding
 import agersant.polaris.util.formatTime
@@ -193,7 +190,7 @@ class PlayerFragment : Fragment() {
     }
 
     private fun updateContent() {
-        val item = player.currentItem
+        val item: CollectionItem? = player.currentItem
 
         val unknown by lazy { getString(R.string.player_unknown) }
         titleText.text = item?.title ?: unknown
