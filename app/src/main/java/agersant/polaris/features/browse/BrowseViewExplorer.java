@@ -15,7 +15,6 @@ import agersant.polaris.PlaybackQueue;
 import agersant.polaris.R;
 import agersant.polaris.api.API;
 import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
