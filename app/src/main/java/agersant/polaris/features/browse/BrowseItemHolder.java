@@ -94,26 +94,26 @@ abstract class BrowseItemHolder extends RecyclerView.ViewHolder implements View.
 
     private void setStatusToIdle() {
         queueStatusText.setText(R.string.add_to_queue);
-        queueStatusIcon.setImageResource(R.drawable.ic_playlist_play_black_24dp);
+        queueStatusIcon.setImageResource(R.drawable.ic_playlist_play_24);
         itemView.requestLayout();
     }
 
     private void setStatusToFetching() {
         queueStatusText.setText(R.string.queuing);
-        queueStatusIcon.setImageResource(R.drawable.ic_hourglass_empty_black_24dp);
+        queueStatusIcon.setImageResource(R.drawable.ic_hourglass_empty_24);
         itemView.requestLayout();
     }
 
     private void setStatusToQueued() {
         queueStatusText.setText(R.string.queued);
-        queueStatusIcon.setImageResource(R.drawable.ic_check_black_24dp);
+        queueStatusIcon.setImageResource(R.drawable.ic_check_24);
         itemView.requestLayout();
         waitAndSwipeBack();
     }
 
     private void setStatusToQueueError() {
         queueStatusText.setText(R.string.queuing_error);
-        queueStatusIcon.setImageResource(R.drawable.ic_error_black_24dp);
+        queueStatusIcon.setImageResource(R.drawable.ic_error_24);
         itemView.requestLayout();
         waitAndSwipeBack();
     }

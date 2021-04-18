@@ -33,7 +33,7 @@
             android:gravity="center"
             android:text="@string/browse_error"
             android:textSize="16sp"
-            app:drawableStartCompat="@drawable/ic_error_black_24dp"
+            app:drawableStartCompat="@drawable/ic_error_24"
             app:drawableTint="?colorError" />
 
         <Button

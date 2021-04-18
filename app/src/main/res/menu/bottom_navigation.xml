@@ -3,14 +3,14 @@
     <!-- Ids reference the navigation graphs not the root fragments -->
     <item
         android:id="@+id/collection"
-        android:icon="@drawable/ic_library_music_black_24dp"
+        android:icon="@drawable/ic_library_music_24"
         android:title="@string/collection" />
     <item
         android:id="@+id/queue"
-        android:icon="@drawable/ic_playlist_play_black_24dp"
+        android:icon="@drawable/ic_queue_music_24"
         android:title="@string/queue" />
     <item
         android:id="@+id/now_playing"
-        android:icon="@drawable/ic_play_circle_outline_black_24dp"
+        android:icon="@drawable/ic_play_circle_filled_24"
         android:title="@string/now_playing" />
 </menu>

@@ -5,38 +5,69 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
     tools:context="agersant.polaris.features.browse.CollectionFragment">
 
-    <Button
-        android:id="@+id/browse_directories"
-        style="@style/CollectionButton"
+    <LinearLayout
+        android:id="@+id/directories"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="@string/collection_browse_directories"
-        app:icon="@drawable/ic_folder_black_24dp"
-        app:iconPadding="12dp"
-        app:iconTint="?android:textColorPrimary" />
+        android:layout_height="wrap_content"
+        android:padding="16dp">
 
-    <Button
-        android:id="@+id/random_albums"
-        style="@style/CollectionButton"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="@string/collection_random_albums"
-        app:icon="@drawable/ic_shuffle_black_24dp"
-        app:iconPadding="12dp"
-        app:iconTint="?android:textColorPrimary" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_folder_24"
+            app:tint="?android:textColorPrimary" />
 
-    <Button
-        android:id="@+id/recent_albums"
-        style="@style/CollectionButton"
+        <TextView
+            style="@style/CollectionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/collection_browse_directories" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/random"
+        android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:text="@string/collection_recently_added"
-        app:icon="@drawable/ic_new_releases_black_24dp"
-        app:iconPadding="12dp"
-        app:iconTint="?android:textColorPrimary" />
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_shuffle_24"
+            app:tint="?android:textColorPrimary" />
+
+        <TextView
+            style="@style/CollectionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/collection_random_albums" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/recent"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_new_releases_24"
+            app:tint="?android:textColorPrimary" />
+
+        <TextView
+            style="@style/CollectionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/collection_recently_added" />
+
+    </LinearLayout>
 
 </LinearLayout>

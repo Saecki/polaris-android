@@ -29,9 +29,9 @@ class BrowseItemHolderExplorer extends BrowseItemHolder {
 
         int res;
         if (item.isDirectory()) {
-            res = R.drawable.ic_folder_open_black_24dp;
+            res = R.drawable.ic_folder_open_24;
         } else {
-            res = R.drawable.ic_audiotrack_black_24dp;
+            res = R.drawable.ic_audiotrack_24;
         }
         icon.setImageResource(res);
     }

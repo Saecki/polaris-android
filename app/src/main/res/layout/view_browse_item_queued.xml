@@ -16,7 +16,7 @@
         android:layout_marginEnd="12dp"
         android:contentDescription="@string/add_to_queue"
         app:tint="?colorPrimary"
-        tools:background="@drawable/ic_playlist_play_black_24dp" />
+        tools:background="@drawable/ic_playlist_play_24" />
 
     <TextView
         android:id="@+id/status_text"
