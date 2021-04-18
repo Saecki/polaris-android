@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#3D5AFE</color> <!--IndigoA400-->
+    <color name="primary">#536DFE</color> <!--IndigoA200-->
     <color name="primaryVariant">#304FFE</color> <!--IndigoA700-->
     <color name="onPrimary">@color/grey50</color> <!--Grey50-->
-    <color name="accent">#EC407A</color> <!--Pink400-->
-    <color name="onAccent">#F8BBD0</color> <!--Pink100-->
     <color name="error">#F44336</color> <!--Red500-->
 
     <color name="playlistInstructions">@color/grey500</color>

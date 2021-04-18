@@ -2,8 +2,6 @@
 <resources>
     <color name="primary">#5C6BC0</color> <!--Indigo400-->
     <color name="primaryVariant">#3F51B5</color> <!--Indigo500-->
-    <color name="accent">#F06292</color> <!--Pink300-->
-    <color name="onAccent">#880E4F</color> <!--Pink900-->
 
     <color name="headerBackground">@color/blueGrey900</color>
     <color name="fallbackArtworkBackground">@color/grey800</color>
