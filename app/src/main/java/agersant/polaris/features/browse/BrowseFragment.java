@@ -198,7 +198,8 @@ public class BrowseFragment extends Fragment {
                 contentView = new BrowseViewAlbum(requireContext(), api, playbackQueue);
                 break;
             case DISCOGRAPHY:
-                contentView = new BrowseViewDiscography(requireContext(), api, playbackQueue);
+                boolean sortAlbums = navigationMode == NavigationMode.PATH;
+                contentView = new BrowseViewDiscography(requireContext(), api, playbackQueue, sortAlbums);
                 break;
         }
 
