@@ -7,6 +7,11 @@
     android:layout_height="match_parent"
     tools:context="agersant.polaris.features.browse.BrowseFragment">
 
+    <FrameLayout
+        android:id="@+id/browse_content_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="match_parent"
@@ -38,15 +43,11 @@
 
         <Button
             android:id="@+id/browse_error_retry"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/browse_error_retry" />
 
     </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/browse_content_holder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
 </RelativeLayout>

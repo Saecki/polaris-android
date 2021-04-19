@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ProgressBar
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
@@ -30,12 +31,12 @@ class BrowseFragment : Fragment() {
     }
 
     private val model: BrowseViewModel by viewModels()
+    private lateinit var contentHolder: ViewGroup
     private lateinit var progressBar: ProgressBar
     private lateinit var errorMessage: View
-    private lateinit var errorRetry: View
-    private lateinit var contentHolder: ViewGroup
-    private lateinit var navigationMode: NavigationMode
+    private lateinit var errorRetry: Button
     private lateinit var toolbar: Toolbar
+    private lateinit var navigationMode: NavigationMode
     private var onRefresh: OnRefreshListener? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
