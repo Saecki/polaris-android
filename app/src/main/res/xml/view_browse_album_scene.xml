@@ -31,7 +31,6 @@
             app:layout_constraintBottom_toTopOf="@id/album_artist"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-
             app:layout_constraintTop_toBottomOf="@id/artwork_container"
             app:layout_constraintWidth_default="wrap" />
 
@@ -39,6 +38,8 @@
             android:id="@+id/album_artist"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="40dp"
             app:layout_constraintBottom_toTopOf="@id/header_barrier"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,6 +55,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/header_barrier" />
+
+        <Constraint
+            android:id="@+id/browse_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header_barrier" />
 
     </ConstraintSet>
 
@@ -79,11 +88,9 @@
             android:layout_marginEnd="16dp"
             app:layout_constraintBottom_toTopOf="@id/album_artist"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@id/artwork_container"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintWidth_default="wrap" />
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <Constraint
             android:id="@+id/album_artist"
@@ -94,11 +101,9 @@
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@id/header_barrier"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@id/artwork_container"
             app:layout_constraintTop_toBottomOf="@id/album_title"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintWidth_default="wrap" />
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <Constraint
             android:id="@+id/queue_all_container"
@@ -107,6 +112,14 @@
             app:layout_constraintBottom_toBottomOf="@id/header_barrier"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/header_barrier" />
+
+        <Constraint
+            android:id="@+id/browse_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header_barrier" />
 
     </ConstraintSet>
 
