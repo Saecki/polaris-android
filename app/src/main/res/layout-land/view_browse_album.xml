@@ -78,6 +78,20 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.45" />
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/queue_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:backgroundTint="?colorSurface"
+        android:contentDescription="@string/add_to_queue"
+        android:text="@string/add_to_queue"
+        android:textColor="?colorOnSurface"
+        app:icon="@drawable/ic_playlist_play_24"
+        app:iconTint="?colorOnSurface"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/browse_recycler_view"
         android:layout_width="0dp"

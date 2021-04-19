@@ -63,6 +63,7 @@
     <string name="ordering_repeat_all">Repeat All</string>
 
     <string name="add_to_queue">Queue</string>
+    <string name="add_all_to_queue">Queue all</string>
     <string name="queued">Added to queue</string>
     <string name="queuing">Fetching…</string>
     <string name="queuing_error">Something went wrong</string>
