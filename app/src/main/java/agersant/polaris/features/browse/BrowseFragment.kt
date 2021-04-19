@@ -37,6 +37,7 @@ class BrowseFragment : Fragment() {
     private lateinit var errorRetry: Button
     private lateinit var toolbar: Toolbar
     private lateinit var navigationMode: NavigationMode
+    private var contentView: BrowseViewContent? = null
     private var onRefresh: OnRefreshListener? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -66,6 +67,12 @@ class BrowseFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun onPause() {
+        super.onPause()
+        model.scrollPosition = contentView?.scrollPosition ?: 0
+        println("scrollPosition: ${model.scrollPosition}")
     }
 
     override fun onResume() {
@@ -115,7 +122,7 @@ class BrowseFragment : Fragment() {
     }
 
     private fun displayContent(items: ArrayList<out CollectionItem>) {
-        val contentView: BrowseViewContent = when (getDisplayModeForItems(items)) {
+        val content: BrowseViewContent = when (getDisplayModeForItems(items)) {
             DisplayMode.EXPLORER -> BrowseViewExplorer(requireContext(), model.api, model.playbackQueue)
             DisplayMode.ALBUM -> BrowseViewAlbum(requireContext(), model.api, model.playbackQueue)
             DisplayMode.DISCOGRAPHY -> {
@@ -123,10 +130,14 @@ class BrowseFragment : Fragment() {
                 BrowseViewDiscography(requireContext(), model.api, model.playbackQueue, sortAlbums)
             }
         }
-        contentView.setItems(items)
-        contentView.setOnRefreshListener(onRefresh)
+        content.setItems(items)
+        content.setOnRefreshListener(onRefresh)
+        content.scrollPosition = model.scrollPosition
+
+        println("scrollPosition: ${model.scrollPosition}")
 
         contentHolder.removeAllViews()
-        contentHolder.addView(contentView)
+        contentHolder.addView(content)
+        contentView = content
     }
 }

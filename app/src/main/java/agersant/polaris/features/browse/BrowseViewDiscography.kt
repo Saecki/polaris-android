@@ -8,6 +8,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
 import java.util.*
 
@@ -19,15 +21,16 @@ internal class BrowseViewDiscography(
     private val sortAlbums: Boolean = false,
 ) : BrowseViewContent(context) {
 
-    private val swipeRefresh: SwipyRefreshLayout
+    private val recyclerView: RecyclerView
     private val adapter: BrowseAdapter
+    private val swipeRefresh: SwipyRefreshLayout
 
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val binding = ViewBrowseDiscographyBinding.inflate(inflater, this, true)
         swipeRefresh = binding.swipeRefresh
 
-        val recyclerView = binding.browseRecyclerView
+        recyclerView = binding.browseRecyclerView
         recyclerView.setHasFixedSize(true)
 
         val callback: ItemTouchHelper.Callback = BrowseTouchCallback()
@@ -46,5 +49,14 @@ internal class BrowseViewDiscography(
     override fun setOnRefreshListener(listener: SwipyRefreshLayout.OnRefreshListener?) {
         swipeRefresh.isEnabled = listener != null
         swipeRefresh.setOnRefreshListener(listener)
+    }
+
+    override fun getScrollPosition(): Int {
+        val layoutManger = recyclerView.layoutManager as LinearLayoutManager
+        return layoutManger.findFirstCompletelyVisibleItemPosition()
+    }
+
+    override fun setScrollPosition(position: Int) {
+        recyclerView.scrollToPosition(position)
     }
 }

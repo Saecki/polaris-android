@@ -22,6 +22,8 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.os.postDelayed
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import java.util.*
 
@@ -32,7 +34,7 @@ internal class BrowseViewAlbum(
     playbackQueue: PlaybackQueue,
 ) : BrowseViewContent(context) {
 
-    private val adapter: BrowseAdapter
+    private val recyclerView: RecyclerView
     private val motionLayout: MotionLayout?
     private val headerBackground: View?
     private val sidebarBackground: View?
@@ -41,10 +43,12 @@ internal class BrowseViewAlbum(
     private val title: TextView
     private val queueAll: ExtendedFloatingActionButton
     private val divider: View?
+    private val adapter: BrowseAdapter
 
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val binding = ViewBrowseAlbumBinding.inflate(inflater, this, true)
+        recyclerView = binding.browseRecyclerView
         motionLayout = binding.motionLayout
         headerBackground = binding.headerBackground
         sidebarBackground = binding.sidebarBackground
@@ -177,5 +181,14 @@ internal class BrowseViewAlbum(
         }
         animator.duration = 400
         animator.start()
+    }
+
+    override fun getScrollPosition(): Int {
+        val layoutManger = recyclerView.layoutManager as LinearLayoutManager
+        return layoutManger.findFirstVisibleItemPosition()
+    }
+
+    override fun setScrollPosition(position: Int) {
+        recyclerView.scrollToPosition(position)
     }
 }

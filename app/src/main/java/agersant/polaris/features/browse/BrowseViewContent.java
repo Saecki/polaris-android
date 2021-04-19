@@ -20,6 +20,12 @@ abstract class BrowseViewContent extends FrameLayout {
     }
 
     void setOnRefreshListener(SwipyRefreshLayout.OnRefreshListener listener) {
+    }
 
+    int getScrollPosition() {
+        return 0;
+    }
+
+    void setScrollPosition(int position) {
     }
 }

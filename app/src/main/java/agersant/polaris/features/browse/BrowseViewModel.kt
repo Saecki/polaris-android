@@ -19,6 +19,7 @@ class BrowseViewModel : ViewModel() {
     val fetching: LiveData<Boolean> = mFetching
     val error: LiveData<Boolean> = mError
     var initialCreation = true
+    var scrollPosition = 0
 
     private val fetchCallback = object : ItemsCallback {
         override fun onSuccess(items: ArrayList<out CollectionItem>) {

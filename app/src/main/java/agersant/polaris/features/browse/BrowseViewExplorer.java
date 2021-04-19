@@ -15,11 +15,13 @@ import agersant.polaris.PlaybackQueue;
 import agersant.polaris.R;
 import agersant.polaris.api.API;
 import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 public class BrowseViewExplorer extends BrowseViewContent {
 
+    private final RecyclerView recyclerView;
     private final BrowseAdapter adapter;
     private final SwipyRefreshLayout swipeRefresh;
 
@@ -34,7 +36,7 @@ public class BrowseViewExplorer extends BrowseViewContent {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.view_browse_explorer, this, true);
 
-        RecyclerView recyclerView = findViewById(R.id.browse_recycler_view);
+        recyclerView = findViewById(R.id.browse_recycler_view);
         recyclerView.setHasFixedSize(true);
 
         ItemTouchHelper.Callback callback = new BrowseTouchCallback();
@@ -62,5 +64,17 @@ public class BrowseViewExplorer extends BrowseViewContent {
     void setOnRefreshListener(SwipyRefreshLayout.OnRefreshListener listener) {
         swipeRefresh.setEnabled(listener != null);
         swipeRefresh.setOnRefreshListener(listener);
+    }
+
+
+    @Override
+    int getScrollPosition() {
+        LinearLayoutManager layoutManger = (LinearLayoutManager) recyclerView.getLayoutManager();
+        return layoutManger.findFirstCompletelyVisibleItemPosition();
+    }
+
+    @Override
+    void setScrollPosition(int position) {
+        recyclerView.scrollToPosition(position);
     }
 }
