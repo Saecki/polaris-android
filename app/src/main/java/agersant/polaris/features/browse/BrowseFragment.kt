@@ -95,7 +95,7 @@ class BrowseFragment : Fragment() {
         }
     }
 
-    private fun getDisplayModeForItems(items: ArrayList<out CollectionItem>): DisplayMode {
+    private fun getDisplayModeForItems(items: List<CollectionItem>): DisplayMode {
         if (items.isEmpty()) {
             return DisplayMode.EXPLORER
         }
@@ -121,7 +121,7 @@ class BrowseFragment : Fragment() {
         } else DisplayMode.EXPLORER
     }
 
-    private fun displayContent(items: ArrayList<out CollectionItem>) {
+    private fun displayContent(items: List<CollectionItem>) {
         val content: BrowseViewContent = when (getDisplayModeForItems(items)) {
             DisplayMode.EXPLORER -> BrowseViewExplorer(requireContext(), model.api, model.playbackQueue)
             DisplayMode.ALBUM -> BrowseViewAlbum(requireContext(), model.api, model.playbackQueue)
@@ -130,7 +130,7 @@ class BrowseFragment : Fragment() {
                 BrowseViewDiscography(requireContext(), model.api, model.playbackQueue, sortAlbums)
             }
         }
-        content.setItems(items)
+        content.updateItems(items)
         content.setOnRefreshListener(onRefresh)
         content.scrollPosition = model.scrollPosition
 

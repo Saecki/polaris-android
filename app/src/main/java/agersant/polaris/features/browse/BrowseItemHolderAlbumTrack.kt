@@ -21,7 +21,7 @@ internal class BrowseItemHolderAlbumTrack(
     private val artistText: TextView = itemView.findViewById(R.id.artist)
     private val durationText: TextView = itemView.findViewById(R.id.duration)
 
-    override fun bindItem(item: CollectionItem) {
+    public override fun bindItem(item: CollectionItem) {
         super.bindItem(item)
 
         val trackNumber = item.trackNumber

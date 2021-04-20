@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import agersant.polaris.CollectionItem;
 import agersant.polaris.PlaybackQueue;
@@ -70,7 +70,7 @@ abstract class BrowseItemHolder extends RecyclerView.ViewHolder implements View.
         final CollectionItem fetchingItem = item;
         ItemsCallback handlers = new ItemsCallback() {
             @Override
-            public void onSuccess(final ArrayList<? extends CollectionItem> items) {
+            public void onSuccess(final List<CollectionItem> items) {
                 new Handler(Looper.getMainLooper()).post(() -> {
                     playbackQueue.addItems(items);
                     if (item == fetchingItem) {

@@ -5,7 +5,7 @@ import android.widget.FrameLayout;
 
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import agersant.polaris.CollectionItem;
 
@@ -16,8 +16,7 @@ abstract class BrowseViewContent extends FrameLayout {
         super(context);
     }
 
-    void setItems(ArrayList<? extends CollectionItem> items) {
-    }
+    abstract void updateItems(List<CollectionItem> items);
 
     void setOnRefreshListener(SwipyRefreshLayout.OnRefreshListener listener) {
     }

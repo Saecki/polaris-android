@@ -11,6 +11,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import agersant.polaris.CollectionItem;
 import agersant.polaris.api.ItemsCallback;
@@ -107,7 +108,7 @@ public class APIVersion3 extends APIBase
 
                 Type collectionType = new TypeToken<ArrayList<CollectionItem.Directory>>() {
                 }.getType();
-                ArrayList<? extends CollectionItem> items;
+                List<CollectionItem> items;
                 try {
                     items = gson.fromJson(response.body().charStream(), collectionType);
                 } catch (JsonSyntaxException e) {
@@ -138,7 +139,7 @@ public class APIVersion3 extends APIBase
 
                 Type collectionType = new TypeToken<ArrayList<CollectionItem.Song>>() {
                 }.getType();
-                ArrayList<? extends CollectionItem> items;
+                ArrayList<CollectionItem> items;
                 try {
                     items = gson.fromJson(response.body().charStream(), collectionType);
                 } catch (JsonSyntaxException e) {

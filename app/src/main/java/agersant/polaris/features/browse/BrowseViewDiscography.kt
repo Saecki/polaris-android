@@ -11,13 +11,12 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
-import java.util.*
 
 @SuppressLint("ViewConstructor")
 internal class BrowseViewDiscography(
     context: Context,
-    api: API?,
-    playbackQueue: PlaybackQueue?,
+    api: API,
+    playbackQueue: PlaybackQueue,
     private val sortAlbums: Boolean = false,
 ) : BrowseViewContent(context) {
 
@@ -41,9 +40,9 @@ internal class BrowseViewDiscography(
         recyclerView.adapter = adapter
     }
 
-    public override fun setItems(items: ArrayList<out CollectionItem>) {
-        if (sortAlbums) items.sortBy { it.year }
-        adapter.setItems(items)
+    override fun updateItems(items: List<CollectionItem>) {
+        if (sortAlbums) items.sortedBy { it.year }
+        adapter.updateItems(items)
     }
 
     override fun setOnRefreshListener(listener: SwipyRefreshLayout.OnRefreshListener?) {

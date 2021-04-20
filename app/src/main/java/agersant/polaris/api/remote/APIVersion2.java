@@ -105,7 +105,7 @@ public class APIVersion2 extends APIBase
 
                 Type collectionType = new TypeToken<ArrayList<CollectionItem.Directory>>() {
                 }.getType();
-                ArrayList<? extends CollectionItem> items;
+                ArrayList<CollectionItem> items;
                 try {
                     items = gson.fromJson(response.body().charStream(), collectionType);
                 } catch (JsonSyntaxException e) {
@@ -136,7 +136,7 @@ public class APIVersion2 extends APIBase
 
                 Type collectionType = new TypeToken<ArrayList<CollectionItem.Song>>() {
                 }.getType();
-                ArrayList<? extends CollectionItem> items;
+                ArrayList<CollectionItem> items;
                 try {
                     items = gson.fromJson(response.body().charStream(), collectionType);
                 } catch (JsonSyntaxException e) {

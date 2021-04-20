@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import agersant.polaris.api.local.OfflineCache;
 import agersant.polaris.api.remote.DownloadQueue;
@@ -22,7 +23,7 @@ public class PlaybackQueue {
     public static final String REMOVED_ITEMS = "REMOVED_ITEMS";
     public static final String REORDERED_ITEMS = "REORDERED_ITEMS";
 
-    private ArrayList<CollectionItem> content;
+    private List<CollectionItem> content;
     private Ordering ordering;
 
     PlaybackQueue() {
@@ -30,11 +31,11 @@ public class PlaybackQueue {
         ordering = Ordering.SEQUENCE;
     }
 
-    ArrayList<CollectionItem> getContent() {
+    List<CollectionItem> getContent() {
         return content;
     }
 
-    void setContent(ArrayList<CollectionItem> content) {
+    void setContent(List<CollectionItem> content) {
         this.content = content;
         broadcast(PlaybackQueue.OVERWROTE_QUEUE);
     }
@@ -73,7 +74,7 @@ public class PlaybackQueue {
         content.add(newItem);
     }
 
-    public void addItems(ArrayList<? extends CollectionItem> items) {
+    public void addItems(List<CollectionItem> items) {
         boolean wasEmpty = size() == 0;
         for (CollectionItem item : items) {
             addItemInternal(item);
