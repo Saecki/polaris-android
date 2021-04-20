@@ -18,11 +18,15 @@ import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout.
 class BrowseFragment : Fragment() {
 
     internal enum class NavigationMode {
-        PATH, RANDOM, RECENT
+        PATH,
+        RANDOM,
+        RECENT,
     }
 
     private enum class DisplayMode {
-        EXPLORER, DISCOGRAPHY, ALBUM
+        EXPLORER,
+        DISCOGRAPHY,
+        ALBUM,
     }
 
     companion object {
@@ -58,7 +62,10 @@ class BrowseFragment : Fragment() {
 
         navigationMode = requireArguments().getSerializable(NAVIGATION_MODE) as NavigationMode
         if (navigationMode == NavigationMode.RANDOM) {
-            onRefresh = OnRefreshListener { loadContent() }
+            onRefresh = OnRefreshListener {
+                model.scrollPosition = 0
+                loadContent()
+            }
         }
 
         if (model.initialCreation) {
@@ -118,7 +125,9 @@ class BrowseFragment : Fragment() {
         }
         return if (album != null && allSongs && allSameAlbum) {
             DisplayMode.ALBUM
-        } else DisplayMode.EXPLORER
+        } else {
+            DisplayMode.EXPLORER
+        }
     }
 
     private fun displayContent(items: List<CollectionItem>) {
