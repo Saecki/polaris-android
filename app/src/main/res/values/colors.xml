@@ -8,7 +8,7 @@
 
     <color name="playlistInstructions">@color/grey500</color>
     <color name="navItemUnchecked">@color/blueGrey500</color>
-    <color name="headerBackground">@color/blueGrey900</color>
+    <color name="headerBackground">@color/blueGrey300</color>
     <color name="headerTextPrimary">@color/text_primary_dark</color>
     <color name="headerTextSecondary">@color/text_secondary_dark</color>
     <color name="toolbarTitle">@color/grey50</color>

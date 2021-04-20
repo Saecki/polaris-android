@@ -3,6 +3,7 @@ package agersant.polaris;
 import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 
 import agersant.polaris.ui.Theme;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -63,4 +64,18 @@ public class PolarisApplication extends Application {
         }
     }
 
+    public boolean isDarkMode() {
+        int mode = AppCompatDelegate.getDefaultNightMode();
+
+        switch (mode) {
+            case AppCompatDelegate.MODE_NIGHT_YES:
+                return true;
+            case AppCompatDelegate.MODE_NIGHT_NO:
+                return false;
+            default: {
+                int system = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+                return system == Configuration.UI_MODE_NIGHT_YES;
+            }
+        }
+    }
 }
