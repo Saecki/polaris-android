@@ -32,7 +32,12 @@ internal class BrowseViewDiscography(
         recyclerView = binding.browseRecyclerView
         recyclerView.setHasFixedSize(true)
 
-        val callback: ItemTouchHelper.Callback = BrowseTouchCallback()
+        val callback: ItemTouchHelper.Callback = object : BrowseTouchCallback() {
+            override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+                super.onSelectedChanged(viewHolder, actionState)
+                swipeRefresh.isEnabled = (actionState != ItemTouchHelper.ACTION_STATE_SWIPE)
+            }
+        }
         val itemTouchHelper = ItemTouchHelper(callback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
