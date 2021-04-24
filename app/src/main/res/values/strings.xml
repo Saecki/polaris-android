@@ -15,7 +15,7 @@
     <string name="queue_empty">Make a playlist by swiping music from your collection to here.</string>
     <string name="queue_downloading">Downloading</string>
     <string name="queue_cached">Cached Locally</string>
-    <string name="queue_clear">Clear queue?</string>
+    <string name="queue_cleared">Cleared queue</string>
 
     <string name="now_playing">Now Playing</string>
     <string name="player_artwork">Album Artwork</string>
@@ -70,6 +70,7 @@
     <string name="queuing_error">Something went wrong</string>
     <string name="album_artwork">Album Artwork</string>
     <string name="playback_error">A media playback error occurred</string>
+    <string name="undo">Undo</string>
 
     <string name="media_player_service_description">Audio playback service for Polaris</string>
     <string name="download_service_description">Music download service for Polaris</string>

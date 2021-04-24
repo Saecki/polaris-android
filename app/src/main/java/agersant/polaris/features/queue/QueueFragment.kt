@@ -14,25 +14,25 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
 class QueueFragment : Fragment() {
-    private var adapter: QueueAdapter? = null
+    private lateinit var adapter: QueueAdapter
+    private lateinit var tutorial: View
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var toolbar: Toolbar
+    private lateinit var playbackQueue: PlaybackQueue
+    private lateinit var player: PolarisPlayer
+    private lateinit var offlineCache: OfflineCache
+    private lateinit var downloadQueue: DownloadQueue
     private var receiver: BroadcastReceiver? = null
-    private var tutorial: View? = null
-    private var recyclerView: RecyclerView? = null
-    private var toolbar: Toolbar? = null
-    private var playbackQueue: PlaybackQueue? = null
-    private var player: PolarisPlayer? = null
-    private var offlineCache: OfflineCache? = null
-    private var downloadQueue: DownloadQueue? = null
     private var initialCreation = true
 
     private fun subscribeToEvents() {
@@ -51,19 +51,29 @@ class QueueFragment : Fragment() {
                     return
                 }
                 when (intent.action) {
-                    PlaybackQueue.REMOVED_ITEM, PlaybackQueue.REMOVED_ITEMS -> updateTutorial()
-                    PlaybackQueue.QUEUED_ITEMS, PlaybackQueue.OVERWROTE_QUEUE -> {
-                        adapter!!.notifyDataSetChanged()
+                    PlaybackQueue.REMOVED_ITEM,
+                    PlaybackQueue.REMOVED_ITEMS -> {
                         updateTutorial()
                     }
-                    PolarisPlayer.OPENING_TRACK, PolarisPlayer.PLAYING_TRACK, OfflineCache.AUDIO_CACHED, OfflineCache.AUDIO_REMOVED_FROM_CACHE, DownloadQueue.WORKLOAD_CHANGED -> adapter!!.notifyItemRangeChanged(0, adapter!!.itemCount)
+                    PlaybackQueue.QUEUED_ITEMS,
+                    PlaybackQueue.OVERWROTE_QUEUE -> {
+                        adapter.notifyDataSetChanged()
+                        updateTutorial()
+                    }
+                    PolarisPlayer.OPENING_TRACK,
+                    PolarisPlayer.PLAYING_TRACK,
+                    OfflineCache.AUDIO_CACHED,
+                    OfflineCache.AUDIO_REMOVED_FROM_CACHE,
+                    DownloadQueue.WORKLOAD_CHANGED -> {
+                        adapter.notifyItemRangeChanged(0, adapter.itemCount)
+                    }
                 }
             }
         }
         requireActivity().registerReceiver(receiver, filter)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         setHasOptionsMenu(true)
         val state = PolarisApplication.getState()
         playbackQueue = state.playbackQueue
@@ -72,8 +82,8 @@ class QueueFragment : Fragment() {
         downloadQueue = state.downloadQueue
         val binding = FragmentQueueBinding.inflate(inflater)
         recyclerView = binding.queueRecyclerView
-        recyclerView!!.setHasFixedSize(true)
-        recyclerView!!.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
         val animator: DefaultItemAnimator = object : DefaultItemAnimator() {
             override fun animateRemove(holder: RecyclerView.ViewHolder): Boolean {
                 holder.itemView.alpha = 0f
@@ -84,7 +94,7 @@ class QueueFragment : Fragment() {
                 return true
             }
         }
-        recyclerView!!.itemAnimator = animator
+        recyclerView.itemAnimator = animator
         tutorial = binding.queueTutorial
         toolbar = requireActivity().findViewById(R.id.toolbar)
         populate()
@@ -93,11 +103,11 @@ class QueueFragment : Fragment() {
     }
 
     private fun updateTutorial() {
-        val empty = adapter!!.itemCount == 0
+        val empty = adapter.itemCount == 0
         if (empty) {
-            tutorial!!.visibility = View.VISIBLE
+            tutorial.visibility = View.VISIBLE
         } else {
-            tutorial!!.visibility = View.GONE
+            tutorial.visibility = View.GONE
         }
     }
 
@@ -106,7 +116,7 @@ class QueueFragment : Fragment() {
         subscribeToEvents()
         updateTutorial()
         if (!initialCreation) {
-            adapter!!.notifyDataSetChanged()
+            adapter.notifyDataSetChanged()
         } else {
             initialCreation = false
         }
@@ -126,7 +136,7 @@ class QueueFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_clear -> {
-                showClearDialog()
+                showClearUndo()
                 true
             }
             R.id.action_shuffle -> {
@@ -146,38 +156,46 @@ class QueueFragment : Fragment() {
         val callback: ItemTouchHelper.Callback = QueueTouchCallback(adapter)
         val itemTouchHelper = ItemTouchHelper(callback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
-        recyclerView!!.adapter = adapter
+        recyclerView.adapter = adapter
     }
 
-    private fun showClearDialog() {
-        AlertDialog.Builder(requireContext())
-            .setTitle(R.string.queue_clear)
-            .setPositiveButton(android.R.string.ok) { _, _ -> clear() }
-            .setNegativeButton(android.R.string.cancel, null)
+    private fun showClearUndo() {
+        if (playbackQueue.isEmpty) return
+
+        val oldItems = playbackQueue.content
+
+        Snackbar.make(requireContext(), toolbar, getString(R.string.queue_cleared), Snackbar.LENGTH_LONG)
+            .setAnimationMode(Snackbar.ANIMATION_MODE_FADE)
+            .setAction(R.string.undo) {
+                playbackQueue.addItems(oldItems)
+                adapter.notifyDataSetChanged()
+            }
             .show()
+
+        clear()
     }
 
     private fun clear() {
-        val oldCount = adapter!!.itemCount
-        playbackQueue!!.clear()
-        adapter!!.notifyItemRangeRemoved(0, oldCount)
+        val oldCount = adapter.itemCount
+        playbackQueue.clear()
+        adapter.notifyItemRangeRemoved(0, oldCount)
     }
 
     private fun shuffle() {
         val rng = Random()
-        val count = adapter!!.itemCount
+        val count = adapter.itemCount
         for (i in 0..count - 2) {
             val j = i + rng.nextInt(count - i)
-            playbackQueue!!.move(i, j)
-            adapter!!.notifyItemMoved(i, j)
+            playbackQueue.move(i, j)
+            adapter.notifyItemMoved(i, j)
         }
     }
 
     private fun setOrdering(item: MenuItem) {
         when (item.itemId) {
-            R.id.action_ordering_sequence -> playbackQueue!!.ordering = Ordering.SEQUENCE
-            R.id.action_ordering_repeat_one -> playbackQueue!!.ordering = Ordering.REPEAT_ONE
-            R.id.action_ordering_repeat_all -> playbackQueue!!.ordering = Ordering.REPEAT_ALL
+            R.id.action_ordering_sequence -> playbackQueue.ordering = Ordering.SEQUENCE
+            R.id.action_ordering_repeat_one -> playbackQueue.ordering = Ordering.REPEAT_ONE
+            R.id.action_ordering_repeat_all -> playbackQueue.ordering = Ordering.REPEAT_ALL
         }
         updateOrderingIcon()
     }
@@ -187,13 +205,12 @@ class QueueFragment : Fragment() {
             Ordering.REPEAT_ONE -> R.drawable.ic_repeat_one_24
             Ordering.REPEAT_ALL -> R.drawable.ic_repeat_24
             Ordering.SEQUENCE -> R.drawable.ic_reorder_24
-            else -> R.drawable.ic_reorder_24
         }
     }
 
     private fun updateOrderingIcon() {
-        val icon = getIconForOrdering(playbackQueue!!.ordering)
-        val orderingItem = toolbar!!.menu.findItem(R.id.action_ordering)
+        val icon = getIconForOrdering(playbackQueue.ordering)
+        val orderingItem = toolbar.menu.findItem(R.id.action_ordering)
         orderingItem?.setIcon(icon)
     }
 }
