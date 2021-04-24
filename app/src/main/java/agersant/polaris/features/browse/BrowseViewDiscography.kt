@@ -41,8 +41,8 @@ internal class BrowseViewDiscography(
     }
 
     override fun updateItems(items: List<CollectionItem>) {
-        if (sortAlbums) items.sortedBy { it.year }
-        adapter.updateItems(items)
+        val sortedItems = if (sortAlbums) items.sortedBy { it.year } else items
+        adapter.updateItems(sortedItems)
     }
 
     override fun setOnRefreshListener(listener: SwipyRefreshLayout.OnRefreshListener?) {
