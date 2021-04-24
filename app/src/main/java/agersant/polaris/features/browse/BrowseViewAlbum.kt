@@ -14,6 +14,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.graphics.drawable.GradientDrawable
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -71,11 +72,7 @@ internal class BrowseViewAlbum(
         when (resources.configuration.orientation) {
             Configuration.ORIENTATION_PORTRAIT -> {
                 recyclerView.setOnScrollChangeListener { v, _, _, _, _ ->
-                    if (v.canScrollVertically(-1)) {
-                        divider?.visibility = VISIBLE
-                    } else {
-                        divider?.visibility = INVISIBLE
-                    }
+                    setDividerVisibility()
                 }
             }
             Configuration.ORIENTATION_LANDSCAPE -> {
@@ -185,10 +182,32 @@ internal class BrowseViewAlbum(
 
     override fun getScrollPosition(): Int {
         val layoutManger = recyclerView.layoutManager as LinearLayoutManager
-        return layoutManger.findFirstVisibleItemPosition()
+        val scrollPosition = layoutManger.findFirstVisibleItemPosition()
+        if (scrollPosition > 0) {
+            return scrollPosition + 1
+        } else if (motionLayout?.progress == 1f) {
+            return 1
+        } else {
+            return 0
+        }
     }
 
     override fun setScrollPosition(position: Int) {
-        recyclerView.scrollToPosition(position)
+        if (position >= 1) {
+            motionLayout?.progress = 1f
+            recyclerView.scrollToPosition(position - 1)
+            queueAll.shrink()
+            Handler().post {
+                setDividerVisibility()
+            }
+        }
+    }
+
+    private fun setDividerVisibility() {
+        if (recyclerView.canScrollVertically(-1)) {
+            divider?.visibility = VISIBLE
+        } else {
+            divider?.visibility = INVISIBLE
+        }
     }
 }
