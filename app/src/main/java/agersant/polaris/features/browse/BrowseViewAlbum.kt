@@ -70,7 +70,7 @@ internal class BrowseViewAlbum(
         when (resources.configuration.orientation) {
             Configuration.ORIENTATION_PORTRAIT -> {
                 recyclerView.setOnScrollChangeListener { v, _, _, _, _ ->
-                    setDividerVisibility()
+                    updateDividerVisibility()
                 }
             }
             Configuration.ORIENTATION_LANDSCAPE -> {
@@ -114,8 +114,8 @@ internal class BrowseViewAlbum(
                 a.trackNumber - b.trackNumber
             }
         }
-        adapter.updateItems(items)
-        val item = items.first()
+        adapter.updateItems(sortedItems)
+        val item = sortedItems.first()
 
         var artistString = item.albumArtist ?: item.artist ?: ""
         if (item.year != -1) {
@@ -182,12 +182,10 @@ internal class BrowseViewAlbum(
         val layoutManger = recyclerView.layoutManager as LinearLayoutManager
         val scrollPosition = layoutManger.findFirstVisibleItemPosition()
 
-        if (scrollPosition > 0) {
-            return scrollPosition + 1
-        } else if (motionLayout?.progress == 1f) {
-            return 1
-        } else {
-            return 0
+        return when {
+            (scrollPosition > 0) -> scrollPosition + 1
+            (motionLayout?.progress == 1f) -> 1
+            else -> 0
         }
     }
 
@@ -197,12 +195,12 @@ internal class BrowseViewAlbum(
             recyclerView.scrollToPosition(position - 1)
             queueAll.shrink()
             Handler().post {
-                setDividerVisibility()
+                updateDividerVisibility()
             }
         }
     }
 
-    private fun setDividerVisibility() {
+    private fun updateDividerVisibility() {
         if (recyclerView.canScrollVertically(-1)) {
             divider?.visibility = VISIBLE
         } else {
