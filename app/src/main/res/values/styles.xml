@@ -27,13 +27,29 @@
 
         <item name="dialogCornerRadius">8dp</item>
 
-        <item name="recyclerViewStyle">@style/RecyclerView</item>
-        <item name="navigationViewStyle">@style/BackdropNavigation</item>
+        <item name="recyclerViewStyle">@style/Widget.Polaris.RecyclerView</item>
+        <item name="navigationViewStyle">@style/Widget.Polaris.NavigationView</item>
+        <item name="snackbarStyle">@style/Widget.Polaris.Snackbar</item>
+        <item name="snackbarButtonStyle">@style/Widget.Polaris.Snackbar.Button</item>
     </style>
 
-    <style name="RecyclerView">
+    <style name="Widget.Polaris.RecyclerView" parent="">
         <item name="android:overScrollMode">never</item>
         <item name="android:scrollbars">none</item>
+    </style>
+
+    <style name="Widget.Polaris.NavigationView" parent="Widget.Design.NavigationView">
+        <item name="background">@color/belowBackground</item>
+        <item name="itemHorizontalPadding">16dp</item>
+        <item name="android:overScrollMode">never</item>
+    </style>
+
+    <style name="Widget.Polaris.Snackbar" parent="Widget.MaterialComponents.Snackbar">
+        <item name="actionTextColorAlpha">1</item>
+    </style>
+
+    <style name="Widget.Polaris.Snackbar.Button" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
+        <item name="android:textColor">@color/primary</item>
     </style>
 
     <style name="HorizontalDivider">
@@ -52,12 +68,6 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
         <item name="android:background">?colorDialogDivider</item>
-    </style>
-
-    <style name="BackdropNavigation" parent="Widget.Design.NavigationView">
-        <item name="background">@color/belowBackground</item>
-        <item name="itemHorizontalPadding">16dp</item>
-        <item name="android:overScrollMode">never</item>
     </style>
 
     <style name="CollectionText">

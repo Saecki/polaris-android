@@ -136,14 +136,16 @@ class QueueFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_clear -> {
-                showClearUndo()
+                clear()
                 true
             }
             R.id.action_shuffle -> {
                 shuffle()
                 true
             }
-            R.id.action_ordering_sequence, R.id.action_ordering_repeat_one, R.id.action_ordering_repeat_all -> {
+            R.id.action_ordering_sequence,
+            R.id.action_ordering_repeat_one,
+            R.id.action_ordering_repeat_all -> {
                 setOrdering(item)
                 true
             }
@@ -159,23 +161,18 @@ class QueueFragment : Fragment() {
         recyclerView.adapter = adapter
     }
 
-    private fun showClearUndo() {
+    private fun clear() {
         if (playbackQueue.isEmpty) return
 
-        val oldItems = playbackQueue.content
-
-        Snackbar.make(requireContext(), toolbar, getString(R.string.queue_cleared), Snackbar.LENGTH_LONG)
+        Snackbar.make(requireContext(), recyclerView, getString(R.string.queue_cleared), Snackbar.LENGTH_LONG)
+            .setAnchorView(R.id.bottom_nav)
             .setAnimationMode(Snackbar.ANIMATION_MODE_FADE)
             .setAction(R.string.undo) {
-                playbackQueue.addItems(oldItems)
+                playbackQueue.restore()
                 adapter.notifyDataSetChanged()
             }
             .show()
 
-        clear()
-    }
-
-    private fun clear() {
         val oldCount = adapter.itemCount
         playbackQueue.clear()
         adapter.notifyItemRangeRemoved(0, oldCount)

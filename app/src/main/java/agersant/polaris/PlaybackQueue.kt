@@ -26,6 +26,7 @@ class PlaybackQueue internal constructor() {
     }
 
     private var mContent = mutableListOf<CollectionItem>()
+    private var mClearedContent: MutableList<CollectionItem>? = null
 
     var ordering: Ordering = Ordering.SEQUENCE
         set(value) {
@@ -98,8 +99,19 @@ class PlaybackQueue internal constructor() {
     }
 
     fun clear() {
-        mContent.clear()
+        mClearedContent = mContent
+        mContent = mutableListOf()
         broadcast(REMOVED_ITEMS)
+    }
+
+    fun restore() {
+        mClearedContent?.let {
+            if (it.isEmpty()) return
+
+            mContent = it
+            mClearedContent = null
+            broadcast(QUEUED_ITEMS)
+        }
     }
 
     fun swap(fromPosition: Int, toPosition: Int) {

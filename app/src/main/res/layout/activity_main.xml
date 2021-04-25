@@ -12,7 +12,6 @@
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/backdrop_nav"
-        style="@style/BackdropNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollIndicators="none"
