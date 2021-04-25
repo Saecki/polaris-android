@@ -57,7 +57,7 @@
             app:layout_constraintTop_toTopOf="@id/header_barrier" />
 
         <Constraint
-            android:id="@+id/browse_recycler_view"
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
@@ -114,7 +114,7 @@
             app:layout_constraintTop_toTopOf="@id/header_barrier" />
 
         <Constraint
-            android:id="@+id/browse_recycler_view"
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="0dp"
@@ -129,7 +129,7 @@
 
         <OnSwipe
             app:dragDirection="dragUp"
-            app:touchAnchorId="@id/browse_recycler_view" />
+            app:touchAnchorId="@id/recycler_view" />
 
     </Transition>
 

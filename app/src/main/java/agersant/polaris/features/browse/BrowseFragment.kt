@@ -13,7 +13,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout.OnRefreshListener
 
 class BrowseFragment : Fragment() {
 
@@ -41,8 +40,8 @@ class BrowseFragment : Fragment() {
     private lateinit var errorRetry: Button
     private lateinit var toolbar: Toolbar
     private lateinit var navigationMode: NavigationMode
-    private var contentView: BrowseViewContent? = null
-    private var onRefresh: OnRefreshListener? = null
+    private var contentView: BrowseContent? = null
+    private var onRefresh: BrowseContent.OnRefreshListener? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         setHasOptionsMenu(true)
@@ -62,7 +61,7 @@ class BrowseFragment : Fragment() {
 
         navigationMode = requireArguments().getSerializable(NAVIGATION_MODE) as NavigationMode
         if (navigationMode == NavigationMode.RANDOM) {
-            onRefresh = OnRefreshListener {
+            onRefresh = BrowseContent.OnRefreshListener {
                 model.scrollPosition = 0
                 loadContent()
             }
@@ -79,7 +78,6 @@ class BrowseFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         model.scrollPosition = contentView?.saveScrollPosition() ?: 0
-        println("scrollPosition: ${model.scrollPosition}")
     }
 
     override fun onResume() {
@@ -131,22 +129,20 @@ class BrowseFragment : Fragment() {
     }
 
     private fun displayContent(items: List<CollectionItem>) {
-        val content: BrowseViewContent = when (getDisplayModeForItems(items)) {
-            DisplayMode.EXPLORER -> BrowseViewExplorer(requireContext(), model.api, model.playbackQueue)
-            DisplayMode.ALBUM -> BrowseViewAlbum(requireContext(), model.api, model.playbackQueue)
+        val content: BrowseContent = when (getDisplayModeForItems(items)) {
+            DisplayMode.EXPLORER -> BrowseContentExplorer(requireContext(), model.api, model.playbackQueue)
+            DisplayMode.ALBUM -> BrowseContentAlbum(requireContext(), model.api, model.playbackQueue)
             DisplayMode.DISCOGRAPHY -> {
                 val sortAlbums = navigationMode == NavigationMode.PATH
-                BrowseViewDiscography(requireContext(), model.api, model.playbackQueue, sortAlbums)
+                BrowseContentDiscography(requireContext(), model.api, model.playbackQueue, sortAlbums)
             }
         }
         content.updateItems(items)
         content.setOnRefreshListener(onRefresh)
         content.restoreScrollPosition(model.scrollPosition)
 
-        println("scrollPosition: ${model.scrollPosition}")
-
         contentHolder.removeAllViews()
-        contentHolder.addView(content)
+        contentHolder.addView(content.root)
         contentView = content
     }
 }

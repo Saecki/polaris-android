@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="agersant.polaris.features.browse.BrowseViewExplorer">
+    tools:context="agersant.polaris.features.browse.BrowseContentExplorer">
 
     <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
         android:id="@+id/swipe_refresh"
@@ -12,7 +12,7 @@
         app:srl_direction="both">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/browse_recycler_view"
+            android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:fastScrollEnabled="true"

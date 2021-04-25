@@ -2,10 +2,15 @@ package agersant.polaris.features.browse
 
 import agersant.polaris.CollectionItem
 import android.content.Context
-import android.widget.FrameLayout
-import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout.OnRefreshListener
+import android.view.View
 
-internal abstract class BrowseViewContent(context: Context) : FrameLayout(context) {
+internal abstract class BrowseContent(protected val context: Context) {
+
+    fun interface OnRefreshListener {
+        fun onRefresh()
+    }
+
+    abstract val root: View
 
     abstract fun updateItems(items: List<CollectionItem>)
 

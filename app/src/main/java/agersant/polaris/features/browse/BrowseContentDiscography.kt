@@ -7,29 +7,32 @@ import agersant.polaris.databinding.ViewBrowseDiscographyBinding
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
 
 @SuppressLint("ViewConstructor")
-internal class BrowseViewDiscography(
+internal class BrowseContentDiscography(
     context: Context,
     api: API,
     playbackQueue: PlaybackQueue,
     private val sortAlbums: Boolean = false,
-) : BrowseViewContent(context) {
+) : BrowseContent(context) {
 
+    override val root: View
     private val recyclerView: RecyclerView
-    private val adapter: BrowseAdapter
     private val swipeRefresh: SwipyRefreshLayout
+    private val adapter: BrowseAdapter
 
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val binding = ViewBrowseDiscographyBinding.inflate(inflater, this, true)
+        val binding = ViewBrowseDiscographyBinding.inflate(inflater)
+        root = binding.root
         swipeRefresh = binding.swipeRefresh
+        recyclerView = binding.recyclerView
 
-        recyclerView = binding.browseRecyclerView
         recyclerView.setHasFixedSize(true)
 
         val callback: ItemTouchHelper.Callback = object : BrowseTouchCallback() {
@@ -50,9 +53,9 @@ internal class BrowseViewDiscography(
         adapter.updateItems(sortedItems)
     }
 
-    override fun setOnRefreshListener(listener: SwipyRefreshLayout.OnRefreshListener?) {
+    override fun setOnRefreshListener(listener: OnRefreshListener?) {
         swipeRefresh.isEnabled = listener != null
-        swipeRefresh.setOnRefreshListener(listener)
+        swipeRefresh.setOnRefreshListener { listener?.onRefresh() }
     }
 
     override fun saveScrollPosition(): Int {
