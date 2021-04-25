@@ -8,18 +8,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class BrowseViewModel : ViewModel() {
-    private val mItems = MutableLiveData(listOf<CollectionItem>())
-    private val mError = MutableLiveData(false)
-    private val mFetching = MutableLiveData(false)
-
-    val api = PolarisApplication.getState().api
-    val serverAPI = PolarisApplication.getState().serverAPI
-    val playbackQueue = PolarisApplication.getState().playbackQueue
-    val items: LiveData<List<CollectionItem>> = mItems
-    val fetching: LiveData<Boolean> = mFetching
-    val error: LiveData<Boolean> = mError
-    var initialCreation = true
-    var scrollPosition = 0
 
     private val fetchCallback = object : ItemsCallback {
         override fun onSuccess(items: List<CollectionItem>) {
@@ -34,6 +22,18 @@ class BrowseViewModel : ViewModel() {
             mError.postValue(true)
         }
     }
+    private val mItems = MutableLiveData(listOf<CollectionItem>())
+    private val mFetching = MutableLiveData(false)
+    private val mError = MutableLiveData(false)
+
+    val items: LiveData<List<CollectionItem>> = mItems
+    val fetching: LiveData<Boolean> = mFetching
+    val error: LiveData<Boolean> = mError
+    val api = PolarisApplication.getState().api
+    val serverAPI = PolarisApplication.getState().serverAPI
+    val playbackQueue = PolarisApplication.getState().playbackQueue
+    var initialCreation = true
+    var scrollPosition = 0
 
     fun loadPath(path: String) {
         mFetching.value = true
