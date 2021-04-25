@@ -6,9 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 
 internal abstract class BrowseAdapter : RecyclerView.Adapter<BrowseItemHolder>() {
 
-    var items: List<CollectionItem> = listOf()
-        protected set
-
     inner class DiffCallback : DiffUtil.Callback() {
         var oldItems = items
 
@@ -25,7 +22,10 @@ internal abstract class BrowseAdapter : RecyclerView.Adapter<BrowseItemHolder>()
         }
     }
 
-    protected val diffCallback = DiffCallback()
+    private val diffCallback = DiffCallback()
+
+    var items: List<CollectionItem> = listOf()
+        protected set
 
     override fun onBindViewHolder(holder: BrowseItemHolder, position: Int) {
         holder.bindItem(items[position])
