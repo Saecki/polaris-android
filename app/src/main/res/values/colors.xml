@@ -7,9 +7,6 @@
 
     <color name="playlistInstructions">@color/grey500</color>
     <color name="navItemUnchecked">@color/blueGrey500</color>
-    <color name="headerBackground">#9FA8DA</color> <!--TODO-->
-    <color name="headerTextPrimary">@color/text_primary_dark</color>
-    <color name="headerTextSecondary">@color/text_secondary_dark</color>
     <color name="toolbarTitle">@color/grey50</color>
     <color name="toolbarSubtitle">@color/grey300</color>
     <color name="fallbackArtworkBackground">@color/grey200</color>

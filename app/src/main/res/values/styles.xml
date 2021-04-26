@@ -19,9 +19,6 @@
         <item name="android:textColorPrimary">@color/textPrimary</item>
         <item name="android:textColorSecondary">@color/textSecondary</item>
 
-        <item name="colorHeaderBackground">@color/headerBackground</item>
-        <item name="colorHeaderTextPrimary">@color/headerTextPrimary</item>
-        <item name="colorHeaderTextSecondary">@color/headerTextSecondary</item>
         <item name="colorDialogDivider">@color/dialogDivider</item>
         <item name="colorDivider">@color/divider</item>
 

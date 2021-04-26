@@ -9,9 +9,6 @@
         <attr name="cornerRadius" format="dimension" />
     </declare-styleable>
 
-    <attr name="colorHeaderBackground" format="color" />
-    <attr name="colorHeaderTextPrimary" format="color" />
-    <attr name="colorHeaderTextSecondary" format="color" />
     <attr name="colorDialogDivider" format="color" />
     <attr name="colorDivider" format="color" />
 </resources>
