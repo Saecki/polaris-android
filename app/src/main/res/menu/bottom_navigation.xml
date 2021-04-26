@@ -7,7 +7,7 @@
         android:title="@string/collection" />
     <item
         android:id="@+id/queue"
-        android:icon="@drawable/ic_queue_music_24"
+        android:icon="@drawable/ic_playlist_play_24"
         android:title="@string/queue" />
     <item
         android:id="@+id/now_playing"
