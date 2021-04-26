@@ -23,25 +23,29 @@ internal class BrowseContentExplorer(
     override val root: View
 
     private val recyclerView: RecyclerView
-    private val adapter: BrowseAdapter
     private val swipeRefresh: SwipyRefreshLayout
+    private val adapter: BrowseAdapter
 
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val binding = ViewBrowseExplorerBinding.inflate(inflater)
+        recyclerView = binding.recyclerView
+        swipeRefresh = binding.swipeRefresh
 
         root = binding.root
-        recyclerView = binding.recyclerView
         recyclerView.setHasFixedSize(true)
 
-        val callback: ItemTouchHelper.Callback = BrowseTouchCallback()
+        val callback: ItemTouchHelper.Callback = object : BrowseTouchCallback() {
+            override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+                super.onSelectedChanged(viewHolder, actionState)
+                swipeRefresh.isEnabled = (actionState != ItemTouchHelper.ACTION_STATE_SWIPE)
+            }
+        }
         val itemTouchHelper = ItemTouchHelper(callback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
         adapter = BrowseAdapterExplorer(api, playbackQueue)
         recyclerView.adapter = adapter
-
-        swipeRefresh = binding.swipeRefresh
     }
 
     override fun updateItems(items: List<CollectionItem>) {
