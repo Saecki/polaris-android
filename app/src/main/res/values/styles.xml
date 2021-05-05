@@ -67,10 +67,17 @@
         <item name="android:background">?colorDialogDivider</item>
     </style>
 
-    <style name="CollectionText">
+    <style name="CollectionButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:padding">16dp</item>
+        <item name="iconPadding">16dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAppearance">?textAppearanceBody1</item>
+        <item name="android:textAlignment">textStart</item>
         <item name="android:textSize">20sp</item>
-        <item name="android:layout_marginStart">12dp</item>
         <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="iconTint">?android:textColorPrimary</item>
+        <item name="rippleColor">@android:color/transparent</item>
     </style>
 
     <style name="DetailsLabel" parent="Widget.MaterialComponents.TextView">
