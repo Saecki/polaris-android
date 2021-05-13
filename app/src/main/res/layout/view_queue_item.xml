@@ -3,15 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
+    android:layout_height="56dp"
     android:background="@drawable/queue_item_background"
     android:duplicateParentState="true">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/artwork_container"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginVertical="4dp"
+        android:layout_marginStart="8dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/artwork"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/album_artwork"
+            tools:background="@drawable/artwork" />
+
+    </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
         android:duplicateParentState="true"
         android:ellipsize="end"
@@ -20,7 +41,7 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@id/artist"
         app:layout_constraintEnd_toStartOf="@id/end_barrier"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/artwork_container"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="Elevator Sunshine Girl" />
@@ -29,7 +50,7 @@
         android:id="@+id/artist"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
         android:duplicateParentState="true"
         android:ellipsize="end"
@@ -38,7 +59,7 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/end_barrier"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/artwork_container"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="Solar Fields" />
@@ -48,35 +69,20 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         app:barrierDirection="start"
-        app:constraint_referenced_ids="cache_icon,download_icon,duration" />
+        app:constraint_referenced_ids="status_icon,duration" />
 
     <ImageView
-        android:id="@+id/cache_icon"
+        android:id="@+id/status_icon"
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/ic_check_circle_24"
-        android:backgroundTint="@color/queue_item_icon"
-        android:contentDescription="@string/queue_cached"
+        android:contentDescription="@string/queue_idle"
         android:duplicateParentState="true"
-        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@id/title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/title" />
-
-    <ImageView
-        android:id="@+id/download_icon"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/ic_sync_24"
-        android:backgroundTint="@color/queue_item_icon"
-        android:contentDescription="@string/queue_downloading"
-        android:duplicateParentState="true"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/title" />
+        app:layout_constraintTop_toTopOf="@id/title"
+        app:tint="@color/queue_item_icon"
+        tools:background="@drawable/ic_check_circle_24" />
 
     <TextView
         android:id="@+id/duration"

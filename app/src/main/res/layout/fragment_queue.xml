@@ -11,6 +11,8 @@
         android:id="@+id/queue_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingVertical="4dp"
         app:fastScrollEnabled="true"
         app:fastScrollHorizontalThumbDrawable="@drawable/scroll_thumb"
         app:fastScrollHorizontalTrackDrawable="@drawable/scroll_track"

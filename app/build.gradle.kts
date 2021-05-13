@@ -56,6 +56,9 @@ dependencies {
     implementation(Deps.Androidx.appcompat)
     implementation(Deps.material)
 
+    // Coroutines
+    implementation(Deps.Kotlinx.coroutines)
+
     // Navigation
     implementation(Deps.Androidx.Nav.fragmentKtx)
     implementation(Deps.Androidx.Nav.uiKtx)

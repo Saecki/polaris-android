@@ -8,6 +8,10 @@ object Deps {
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
     }
 
+    object Kotlinx {
+        const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0-RC"
+    }
+
     object Androidx {
         object Nav {
             const val version = "2.3.5"

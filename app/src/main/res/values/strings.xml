@@ -13,6 +13,7 @@
 
     <string name="queue">Queue</string>
     <string name="queue_empty">Make a playlist by swiping music from your collection to here.</string>
+    <string name="queue_idle">Idle</string>
     <string name="queue_downloading">Downloading</string>
     <string name="queue_cached">Cached Locally</string>
     <string name="queue_cleared">Cleared queue</string>

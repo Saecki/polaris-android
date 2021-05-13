@@ -9,7 +9,15 @@ import androidx.annotation.Dimension
 fun formatTime(time: Int): String {
     val minutes = time / 60
     val seconds = time % 60
-    return minutes.toString() + ":" + String.format("%02d", seconds)
+    return "%d:%02d".format(minutes, seconds)
+}
+
+fun formatDuration(duration: Int): String {
+    return if (duration == -1) {
+        ""
+    } else {
+        formatTime(duration)
+    }
 }
 
 @ColorInt

@@ -4,6 +4,7 @@ import agersant.polaris.CollectionItem
 import agersant.polaris.PlaybackQueue
 import agersant.polaris.R
 import agersant.polaris.api.API
+import agersant.polaris.util.formatDuration
 import agersant.polaris.util.formatTime
 import android.view.View
 import android.widget.TextView
@@ -32,10 +33,6 @@ internal class BrowseItemHolderAlbumTrack(
         }
         titleText.text = item.title ?: item.name
         artistText.text = item.artist ?: ""
-        if (item.duration != -1) {
-            durationText.text = formatTime(item.duration)
-        } else {
-            durationText.text = ""
-        }
+        durationText.text = formatDuration(item.duration)
     }
 }

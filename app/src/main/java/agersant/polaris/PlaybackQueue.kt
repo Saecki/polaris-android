@@ -110,7 +110,7 @@ class PlaybackQueue internal constructor() {
 
             mContent = it
             mClearedContent = null
-            broadcast(QUEUED_ITEMS)
+            broadcast(OVERWROTE_QUEUE)
         }
     }
 

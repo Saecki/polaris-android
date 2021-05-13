@@ -4,8 +4,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 
-import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSource;
 
 import java.io.File;
@@ -73,7 +74,7 @@ class DownloadQueueWorkItem {
         this.item = item;
         Uri uri = serverAPI.getAudioUri(item.getPath());
         PolarisExoPlayerDataSourceFactory dsf = new PolarisExoPlayerDataSourceFactory(offlineCache, serverAPI.getAuth(), scratchFile, item);
-        mediaSource = new ExtractorMediaSource.Factory(dsf).createMediaSource(uri);
+        mediaSource = new ProgressiveMediaSource.Factory(dsf).createMediaSource(MediaItem.fromUri(uri));
         dataSource = dsf.createDataSource();
         broadcast(DownloadQueue.WORKLOAD_CHANGED);
     }

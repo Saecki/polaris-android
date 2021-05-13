@@ -5,6 +5,7 @@ import agersant.polaris.PlaybackQueue.Ordering
 import agersant.polaris.PolarisApplication
 import agersant.polaris.PolarisPlayer
 import agersant.polaris.R
+import agersant.polaris.api.API
 import agersant.polaris.api.local.OfflineCache
 import agersant.polaris.api.remote.DownloadQueue
 import agersant.polaris.databinding.FragmentQueueBinding
@@ -15,6 +16,7 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -30,10 +32,10 @@ class QueueFragment : Fragment() {
     private lateinit var toolbar: Toolbar
     private lateinit var playbackQueue: PlaybackQueue
     private lateinit var player: PolarisPlayer
+    private lateinit var api: API
     private lateinit var offlineCache: OfflineCache
     private lateinit var downloadQueue: DownloadQueue
     private var receiver: BroadcastReceiver? = null
-    private var initialCreation = true
 
     private fun subscribeToEvents() {
         val filter = IntentFilter()
@@ -57,7 +59,7 @@ class QueueFragment : Fragment() {
                     }
                     PlaybackQueue.QUEUED_ITEMS,
                     PlaybackQueue.OVERWROTE_QUEUE -> {
-                        adapter.notifyDataSetChanged()
+                        adapter.updateItems()
                         updateTutorial()
                     }
                     PolarisPlayer.OPENING_TRACK,
@@ -75,15 +77,22 @@ class QueueFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         setHasOptionsMenu(true)
+
         val state = PolarisApplication.getState()
         playbackQueue = state.playbackQueue
         player = state.player
+        api = state.api
         offlineCache = state.offlineCache
         downloadQueue = state.downloadQueue
+
         val binding = FragmentQueueBinding.inflate(inflater)
         recyclerView = binding.queueRecyclerView
+        tutorial = binding.queueTutorial
+        toolbar = requireActivity().findViewById(R.id.toolbar)
+
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
         val animator: DefaultItemAnimator = object : DefaultItemAnimator() {
             override fun animateRemove(holder: RecyclerView.ViewHolder): Boolean {
                 holder.itemView.alpha = 0f
@@ -95,31 +104,22 @@ class QueueFragment : Fragment() {
             }
         }
         recyclerView.itemAnimator = animator
-        tutorial = binding.queueTutorial
-        toolbar = requireActivity().findViewById(R.id.toolbar)
+
         populate()
         updateTutorial()
         return binding.root
     }
 
     private fun updateTutorial() {
-        val empty = adapter.itemCount == 0
-        if (empty) {
-            tutorial.visibility = View.VISIBLE
-        } else {
-            tutorial.visibility = View.GONE
-        }
+        val isEmpty = adapter.itemCount == 0
+        tutorial.isVisible = isEmpty
     }
 
     override fun onStart() {
         super.onStart()
         subscribeToEvents()
         updateTutorial()
-        if (!initialCreation) {
-            adapter.notifyDataSetChanged()
-        } else {
-            initialCreation = false
-        }
+        adapter.updateItems()
     }
 
     override fun onStop() {
@@ -154,7 +154,7 @@ class QueueFragment : Fragment() {
     }
 
     private fun populate() {
-        adapter = QueueAdapter(playbackQueue, player, offlineCache, downloadQueue)
+        adapter = QueueAdapter(playbackQueue, player, api, offlineCache, downloadQueue)
         val callback: ItemTouchHelper.Callback = QueueTouchCallback(adapter)
         val itemTouchHelper = ItemTouchHelper(callback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
