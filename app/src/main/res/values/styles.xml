@@ -27,6 +27,7 @@
         <item name="recyclerViewStyle">@style/Widget.Polaris.RecyclerView</item>
         <item name="navigationViewStyle">@style/Widget.Polaris.NavigationView</item>
         <item name="snackbarStyle">@style/Widget.Polaris.Snackbar</item>
+        <item name="snackbarTextViewStyle">@style/Widget.Polaris.Snackbar.TextView</item>
         <item name="snackbarButtonStyle">@style/Widget.Polaris.Snackbar.Button</item>
     </style>
 
@@ -42,7 +43,13 @@
     </style>
 
     <style name="Widget.Polaris.Snackbar" parent="Widget.MaterialComponents.Snackbar">
+        <item name="backgroundTint">?colorSurface</item>
+        <item name="android:textColor">?colorOnSurface</item>
         <item name="actionTextColorAlpha">1</item>
+    </style>
+
+    <style name="Widget.Polaris.Snackbar.TextView" parent="Widget.MaterialComponents.Snackbar.TextView">
+        <item name="android:textColor">?android:textColorPrimary</item>
     </style>
 
     <style name="Widget.Polaris.Snackbar.Button" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
