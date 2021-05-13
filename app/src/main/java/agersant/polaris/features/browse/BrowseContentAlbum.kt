@@ -8,7 +8,6 @@ import agersant.polaris.databinding.ViewBrowseAlbumBinding
 import agersant.polaris.util.getAttrColor
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Configuration
@@ -26,7 +25,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 
-@SuppressLint("ViewConstructor")
 internal class BrowseContentAlbum(
     context: Context,
     private val api: API,

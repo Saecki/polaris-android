@@ -4,7 +4,6 @@ import agersant.polaris.CollectionItem
 import agersant.polaris.PlaybackQueue
 import agersant.polaris.api.API
 import agersant.polaris.databinding.ViewBrowseDiscographyBinding
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
 
-@SuppressLint("ViewConstructor")
 internal class BrowseContentDiscography(
     context: Context,
     api: API,
