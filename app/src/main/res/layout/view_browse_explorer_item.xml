@@ -1,31 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/text"
     android:layout_width="match_parent"
-    android:layout_height="48dp">
-
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="16dp"
-        android:src="@drawable/ic_folder_open_24"
-        app:tint="?android:textColorPrimary" />
-
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="16dp"
-        android:ellipsize="end"
-        android:gravity="center_vertical"
-        android:maxLines="1"
-        android:textColor="?android:textColorPrimary"
-        android:textSize="18sp"
-        tools:text="Dead Can Dance" />
-
-</LinearLayout>
+    android:layout_height="48dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:drawablePadding="12dp"
+    android:ellipsize="end"
+    android:gravity="center_vertical"
+    android:maxLines="1"
+    android:textColor="?android:textColorPrimary"
+    android:textSize="18sp"
+    tools:drawableStartCompat="@drawable/ic_folder_open_24"
+    tools:text="Dead Can Dance" />

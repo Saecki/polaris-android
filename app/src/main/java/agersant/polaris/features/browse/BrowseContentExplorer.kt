@@ -25,7 +25,7 @@ internal class BrowseContentExplorer(
     private val adapter: BrowseAdapter
 
     init {
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val inflater = LayoutInflater.from(context)
         val binding = ViewBrowseExplorerBinding.inflate(inflater)
         recyclerView = binding.recyclerView
         swipeRefresh = binding.swipeRefresh

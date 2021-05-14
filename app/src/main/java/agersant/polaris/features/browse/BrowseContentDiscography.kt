@@ -25,7 +25,7 @@ internal class BrowseContentDiscography(
     private val adapter: BrowseAdapter
 
     init {
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val inflater = LayoutInflater.from(context)
         val binding = ViewBrowseDiscographyBinding.inflate(inflater)
         root = binding.root
         swipeRefresh = binding.swipeRefresh

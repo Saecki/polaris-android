@@ -2,32 +2,29 @@ package agersant.polaris.features.browse
 
 import agersant.polaris.CollectionItem
 import agersant.polaris.PlaybackQueue
-import agersant.polaris.R
 import agersant.polaris.api.API
+import agersant.polaris.databinding.ViewBrowseAlbumItemBinding
+import agersant.polaris.databinding.ViewQueueStatusBinding
 import agersant.polaris.util.formatDuration
-import agersant.polaris.util.formatTime
-import android.view.View
-import android.widget.TextView
 
 internal class BrowseItemHolderAlbumTrack(
-    api: API?,
-    playbackQueue: PlaybackQueue?,
-    adapter: BrowseAdapter?,
-    itemView: View,
-    itemQueueStatusView: View?
-) : BrowseItemHolder(api, playbackQueue, adapter, itemView, itemQueueStatusView) {
+    api: API,
+    playbackQueue: PlaybackQueue,
+    adapter: BrowseAdapter,
+    itemBinding: ViewBrowseAlbumItemBinding,
+    queueStatusBinding: ViewQueueStatusBinding
+) : BrowseItemHolder(api, playbackQueue, adapter, itemBinding.root, queueStatusBinding) {
 
-    private val trackNumberText: TextView = itemView.findViewById(R.id.track_number)
-    private val titleText: TextView = itemView.findViewById(R.id.title)
-    private val artistText: TextView = itemView.findViewById(R.id.artist)
-    private val durationText: TextView = itemView.findViewById(R.id.duration)
+    private val trackNumberText = itemBinding.trackNumber
+    private val titleText = itemBinding.title
+    private val artistText = itemBinding.artist
+    private val durationText = itemBinding.duration
 
-    public override fun bindItem(item: CollectionItem) {
+    override fun bindItem(item: CollectionItem) {
         super.bindItem(item)
 
-        val trackNumber = item.trackNumber
-        if (trackNumber != -1) {
-            trackNumberText.text = String.format("%02d", trackNumber)
+        if (item.trackNumber != -1) {
+            trackNumberText.text = String.format("%02d", item.trackNumber)
         } else {
             trackNumberText.text = ""
         }

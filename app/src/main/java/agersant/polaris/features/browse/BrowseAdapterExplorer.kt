@@ -1,11 +1,11 @@
 package agersant.polaris.features.browse;
 
+import agersant.polaris.PlaybackQueue
+import agersant.polaris.api.API
+import agersant.polaris.databinding.ViewBrowseExplorerItemBinding
+import agersant.polaris.databinding.ViewQueueStatusBinding
 import android.view.LayoutInflater
 import android.view.ViewGroup
-
-import agersant.polaris.PlaybackQueue
-import agersant.polaris.R
-import agersant.polaris.api.API
 
 
 internal class BrowseAdapterExplorer(
@@ -15,9 +15,9 @@ internal class BrowseAdapterExplorer(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BrowseItemHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val itemQueueStatusView = inflater.inflate(R.layout.view_browse_item_queued, parent, false);
-        val itemView = inflater.inflate(R.layout.view_browse_explorer_item, parent, false);
+        val itemBinding = ViewBrowseExplorerItemBinding.inflate(inflater, parent, false);
+        val queueStatusBinding = ViewQueueStatusBinding.inflate(inflater, parent, false);
 
-        return BrowseItemHolderExplorer(api, playbackQueue, this, itemView, itemQueueStatusView);
+        return BrowseItemHolderExplorer(api, playbackQueue, this, itemBinding, queueStatusBinding);
     }
 }

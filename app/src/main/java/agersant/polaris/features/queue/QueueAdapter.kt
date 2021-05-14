@@ -39,7 +39,7 @@ internal class QueueAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QueueItemHolder {
         val queueItemView = QueueItemView(parent.context)
-        val params = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        val params = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         queueItemView.layoutParams = params
         return QueueItemHolder(queueItemView, player, api, offlineCache, downloadQueue)
     }

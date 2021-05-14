@@ -4,27 +4,28 @@ import agersant.polaris.CollectionItem
 import agersant.polaris.PlaybackQueue
 import agersant.polaris.R
 import agersant.polaris.api.API
-import android.view.View
+import agersant.polaris.databinding.ViewBrowseDiscographyItemBinding
+import agersant.polaris.databinding.ViewQueueStatusBinding
 import android.widget.ImageView
 import android.widget.TextView
 
 internal class BrowseItemHolderDiscography(
-    api: API?,
-    playbackQueue: PlaybackQueue?,
-    adapter: BrowseAdapter?,
-    itemView: View,
-    itemQueueStatusView: View?
-) : BrowseItemHolder(api, playbackQueue, adapter, itemView, itemQueueStatusView) {
+    api: API,
+    playbackQueue: PlaybackQueue,
+    adapter: BrowseAdapter,
+    itemBinding: ViewBrowseDiscographyItemBinding,
+    queueStatusBinding: ViewQueueStatusBinding,
+) : BrowseItemHolder(api, playbackQueue, adapter, itemBinding.root, queueStatusBinding) {
 
-    private val artwork: ImageView = itemView.findViewById(R.id.artwork)
-    private val artist: TextView = itemView.findViewById(R.id.artist)
-    private val album: TextView = itemView.findViewById(R.id.album)
+    private val artwork: ImageView = itemBinding.artwork
+    private val artist: TextView = itemBinding.artist
+    private val album: TextView = itemBinding.album
 
     init {
         itemView.setOnClickListener(this)
     }
 
-    public override fun bindItem(item: CollectionItem) {
+    override fun bindItem(item: CollectionItem) {
         super.bindItem(item)
 
         var artistString = item.albumArtist ?: item.artist.orEmpty()

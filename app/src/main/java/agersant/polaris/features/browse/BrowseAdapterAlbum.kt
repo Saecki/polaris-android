@@ -2,8 +2,10 @@ package agersant.polaris.features.browse
 
 import agersant.polaris.CollectionItem
 import agersant.polaris.PlaybackQueue
-import agersant.polaris.R
 import agersant.polaris.api.API
+import agersant.polaris.databinding.ViewBrowseAlbumDiscHeaderBinding
+import agersant.polaris.databinding.ViewBrowseAlbumItemBinding
+import agersant.polaris.databinding.ViewQueueStatusBinding
 import android.util.SparseIntArray
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -51,16 +53,17 @@ internal class BrowseAdapterAlbum(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BrowseItemHolder {
-        val itemQueueStatusView = LayoutInflater.from(parent.context).inflate(R.layout.view_browse_item_queued, parent, false)
+        val inflater = LayoutInflater.from(parent.context)
+        val queueStatusBinding = ViewQueueStatusBinding.inflate(inflater, parent, false)
 
         return when (viewType) {
             AlbumViewType.DISC_HEADER.ordinal -> {
-                val itemView = LayoutInflater.from(parent.context).inflate(R.layout.view_browse_album_disc_header, parent, false)
-                BrowseItemHolderAlbumDiscHeader(api, playbackQueue, this, itemView, itemQueueStatusView)
+                val itemBinding = ViewBrowseAlbumDiscHeaderBinding.inflate(inflater, parent, false)
+                BrowseItemHolderAlbumDiscHeader(api, playbackQueue, this, itemBinding, queueStatusBinding)
             }
             else -> {
-                val itemView = LayoutInflater.from(parent.context).inflate(R.layout.view_browse_album_item, parent, false)
-                BrowseItemHolderAlbumTrack(api, playbackQueue, this, itemView, itemQueueStatusView)
+                val itemBinding = ViewBrowseAlbumItemBinding.inflate(inflater, parent, false)
+                BrowseItemHolderAlbumTrack(api, playbackQueue, this, itemBinding, queueStatusBinding)
             }
         }
     }
