@@ -117,12 +117,12 @@ internal class BrowseContentAlbum(
         adapter.updateItems(sortedItems)
         val item = sortedItems.first()
 
-        var artistString = item.albumArtist ?: item.artist ?: ""
+        var artistString = item.albumArtist ?: item.artist.orEmpty()
         if (item.year != -1) {
             artistString += " • ${item.year}"
         }
         artist.text = artistString
-        title.text = item.album ?: ""
+        title.text = item.album.orEmpty()
         if (item.artwork != null) {
             api.loadImageIntoView(item, artwork) { image ->
                 Palette.from(image).generate { palette ->

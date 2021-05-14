@@ -92,7 +92,7 @@ class BrowseFragment : Fragment() {
     private fun loadContent() {
         when (navigationMode) {
             NavigationMode.PATH -> {
-                val path = requireArguments().getString(PATH) ?: ""
+                val path = requireArguments().getString(PATH).orEmpty()
                 model.loadPath(path)
             }
             NavigationMode.RANDOM -> model.loadRandom()

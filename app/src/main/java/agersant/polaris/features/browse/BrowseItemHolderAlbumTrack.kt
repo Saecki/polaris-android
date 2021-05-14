@@ -32,7 +32,7 @@ internal class BrowseItemHolderAlbumTrack(
             trackNumberText.text = ""
         }
         titleText.text = item.title ?: item.name
-        artistText.text = item.artist ?: ""
+        artistText.text = item.artist.orEmpty()
         durationText.text = formatDuration(item.duration)
     }
 }
