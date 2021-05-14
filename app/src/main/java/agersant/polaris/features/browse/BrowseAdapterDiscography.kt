@@ -16,8 +16,8 @@ internal class BrowseAdapterDiscography(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BrowseItemHolder {
         val inflater = LayoutInflater.from(parent.context)
         val itemBinding = ViewBrowseDiscographyItemBinding.inflate(inflater, parent, false);
-        val itemQueueStatusView = ViewQueueStatusBinding.inflate(inflater, parent, false);
+        val queueStatusBinding = ViewQueueStatusBinding.inflate(inflater, parent, false);
 
-        return BrowseItemHolderDiscography(api, playbackQueue, this, itemBinding, itemQueueStatusView);
+        return BrowseItemHolderDiscography(api, playbackQueue, this, itemBinding, queueStatusBinding);
     }
 }

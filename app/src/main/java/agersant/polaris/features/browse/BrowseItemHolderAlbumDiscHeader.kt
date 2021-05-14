@@ -27,7 +27,7 @@ internal class BrowseItemHolderAlbumDiscHeader(
         throw UnsupportedOperationException()
     }
 
-    override fun onSwiped(view: View?) {
+    override fun onSwiped() {
         throw UnsupportedOperationException()
     }
 

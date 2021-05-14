@@ -19,7 +19,7 @@ internal open class BrowseTouchCallback : ItemTouchHelper.SimpleCallback(0, 0) {
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val itemHolder = viewHolder as BrowseItemHolder
-        itemHolder.onSwiped(itemHolder.itemView)
+        itemHolder.onSwiped()
     }
 
     override fun onChildDraw(

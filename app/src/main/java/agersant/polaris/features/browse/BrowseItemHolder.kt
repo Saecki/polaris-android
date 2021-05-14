@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import androidx.core.os.postDelayed
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -43,7 +44,7 @@ internal abstract class BrowseItemHolder(
         }
     }
 
-    open fun onSwiped(view: View?) {
+    open fun onSwiped() {
         item?.let {
             if (it.isDirectory) {
                 queueDirectory()
@@ -107,12 +108,12 @@ internal abstract class BrowseItemHolder(
     private fun waitAndSwipeBack() {
         val oldItem = item
         val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed({
+        handler.postDelayed(1000) {
             if (item === oldItem) {
                 val position = adapterPosition
                 adapter.notifyItemChanged(position)
             }
-        }, 1000)
+        }
     }
 
     fun onChildDraw(canvas: Canvas, dX: Float, actionState: Int) {
