@@ -42,11 +42,12 @@ class QueueFragment : Fragment() {
         filter.addAction(PlaybackQueue.REMOVED_ITEM)
         filter.addAction(PlaybackQueue.REMOVED_ITEMS)
         filter.addAction(PlaybackQueue.QUEUED_ITEMS)
+        filter.addAction(PlaybackQueue.OVERWROTE_QUEUE)
         filter.addAction(PolarisPlayer.OPENING_TRACK)
         filter.addAction(PolarisPlayer.PLAYING_TRACK)
         filter.addAction(OfflineCache.AUDIO_CACHED)
-        filter.addAction(DownloadQueue.WORKLOAD_CHANGED)
         filter.addAction(OfflineCache.AUDIO_REMOVED_FROM_CACHE)
+        filter.addAction(DownloadQueue.WORKLOAD_CHANGED)
         receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent?) {
                 if (intent == null || intent.action == null) {
@@ -57,9 +58,12 @@ class QueueFragment : Fragment() {
                     PlaybackQueue.REMOVED_ITEMS -> {
                         updateTutorial()
                     }
-                    PlaybackQueue.QUEUED_ITEMS,
-                    PlaybackQueue.OVERWROTE_QUEUE -> {
+                    PlaybackQueue.QUEUED_ITEMS -> {
                         adapter.updateItems()
+                        updateTutorial()
+                    }
+                    PlaybackQueue.OVERWROTE_QUEUE -> {
+                        adapter.notifyDataSetChanged()
                         updateTutorial()
                     }
                     PolarisPlayer.OPENING_TRACK,
@@ -111,8 +115,7 @@ class QueueFragment : Fragment() {
     }
 
     private fun updateTutorial() {
-        val isEmpty = adapter.itemCount == 0
-        tutorial.isVisible = isEmpty
+        tutorial.isVisible = playbackQueue.isEmpty
     }
 
     override fun onStart() {
@@ -169,7 +172,6 @@ class QueueFragment : Fragment() {
             .setAnimationMode(Snackbar.ANIMATION_MODE_FADE)
             .setAction(R.string.undo) {
                 playbackQueue.restore()
-                adapter.notifyDataSetChanged()
             }
             .show()
 
