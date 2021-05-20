@@ -1,7 +1,7 @@
 import 'package:audio_service/audio_service.dart';
+import 'package:polaris/foreground/ui/utils/format.dart';
 import 'package:polaris/shared/dto.dart';
 import 'package:polaris/shared/polaris.dart' as polaris;
-import 'package:polaris/foreground/ui/utils/format.dart';
 import 'package:uuid/uuid.dart';
 
 final String extraKeyPath = 'path';
@@ -22,7 +22,7 @@ extension MediaItemConversions on Song {
       title: title,
       artist: formatArtist(),
       duration: duration != null ? Duration(seconds: duration) : null,
-      artUri: artwork == null ? null : polarisAPI.getImageURI(artwork).toString(),
+      artUri: artwork == null ? null : polarisAPI.getImageURI(artwork),
       extras: {
         extraKeyPath: path,
         extraKeyTrackNumber: trackNumber,
