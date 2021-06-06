@@ -95,7 +95,6 @@ class QueueFragment : Fragment() {
         toolbar = requireActivity().findViewById(R.id.toolbar)
 
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         val animator: DefaultItemAnimator = object : DefaultItemAnimator() {
             override fun animateRemove(holder: RecyclerView.ViewHolder): Boolean {

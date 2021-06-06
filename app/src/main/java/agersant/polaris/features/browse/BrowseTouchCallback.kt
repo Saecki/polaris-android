@@ -4,7 +4,9 @@ import android.graphics.Canvas
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
-internal open class BrowseTouchCallback : ItemTouchHelper.SimpleCallback(0, 0) {
+internal open class BrowseTouchCallback() : ItemTouchHelper.SimpleCallback(0, 0) {
+
+    private var enableRefresh: (Boolean) -> Unit = {}
 
     override fun getSwipeDirs(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
         return when (viewHolder) {
@@ -22,6 +24,12 @@ internal open class BrowseTouchCallback : ItemTouchHelper.SimpleCallback(0, 0) {
         itemHolder.onSwiped()
     }
 
+    override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+        super.onSelectedChanged(viewHolder, actionState)
+        val isNotSwiping = actionState != ItemTouchHelper.ACTION_STATE_SWIPE
+        enableRefresh(isNotSwiping)
+    }
+
     override fun onChildDraw(
         canvas: Canvas,
         recyclerView: RecyclerView,
@@ -34,5 +42,9 @@ internal open class BrowseTouchCallback : ItemTouchHelper.SimpleCallback(0, 0) {
         val itemHolder = viewHolder as BrowseItemHolder
         itemHolder.onChildDraw(canvas, dX, actionState)
         super.onChildDraw(canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+    }
+
+    fun setOnEnableRefresh(enable: (Boolean) -> Unit) {
+        this.enableRefresh = enable
     }
 }

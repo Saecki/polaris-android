@@ -23,7 +23,6 @@ object Deps {
         const val coreKtx = "androidx.core:core-ktx:1.5.0"
         const val preferenceKtx = "androidx.preference:preference-ktx:1.1.1"
         const val media = "androidx.media:media:1.3.1"
-        const val palette = "androidx.palette:palette:1.0.0"
     }
 
     object ExoPlayer {

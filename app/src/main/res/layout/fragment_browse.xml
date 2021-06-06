@@ -8,7 +8,7 @@
     tools:context="agersant.polaris.features.browse.BrowseFragment">
 
     <FrameLayout
-        android:id="@+id/browse_content_holder"
+        android:id="@+id/content_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -21,7 +21,7 @@
         tools:visibility="gone" />
 
     <LinearLayout
-        android:id="@+id/browse_error_message"
+        android:id="@+id/error_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -42,7 +42,7 @@
             app:drawableTint="?colorError" />
 
         <Button
-            android:id="@+id/browse_error_retry"
+            android:id="@+id/error_retry"
             style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

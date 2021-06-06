@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.ProgressBar
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
@@ -34,23 +35,23 @@ class BrowseFragment : Fragment() {
     }
 
     private val model: BrowseViewModel by viewModels()
-    private lateinit var contentHolder: ViewGroup
+    private lateinit var contentHolder: FrameLayout
     private lateinit var progressBar: ProgressBar
     private lateinit var errorMessage: View
     private lateinit var errorRetry: Button
     private lateinit var toolbar: Toolbar
     private lateinit var navigationMode: NavigationMode
-    private var contentView: BrowseContent? = null
-    private var onRefresh: BrowseContent.OnRefreshListener? = null
+    private var content: BrowseContent? = null
+    private lateinit var onRefresh: BrowseContent.OnRefreshListener
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         setHasOptionsMenu(true)
 
         val binding = FragmentBrowseBinding.inflate(inflater)
-        errorMessage = binding.browseErrorMessage
+        contentHolder = binding.contentHolder
         progressBar = binding.progressBar
-        contentHolder = binding.browseContentHolder
-        errorRetry = binding.browseErrorRetry
+        errorMessage = binding.errorMessage
+        errorRetry = binding.errorRetry
         toolbar = requireActivity().findViewById(R.id.toolbar)
 
         model.items.observe(viewLifecycleOwner, this::displayContent)
@@ -58,15 +59,14 @@ class BrowseFragment : Fragment() {
         model.error.observe(viewLifecycleOwner, errorMessage::isVisible::set)
 
         errorRetry.setOnClickListener { loadContent() }
-
-        navigationMode = requireArguments().getSerializable(NAVIGATION_MODE) as NavigationMode
-        if (navigationMode == NavigationMode.RANDOM) {
-            onRefresh = BrowseContent.OnRefreshListener {
-                model.scrollPosition = 0
-                loadContent()
-            }
+        onRefresh = BrowseContent.OnRefreshListener {
+            model.scrollPosition = 0
+            loadContent()
         }
 
+        navigationMode = requireArguments().getSerializable(NAVIGATION_MODE) as NavigationMode
+
+        content = null
         if (model.initialCreation) {
             loadContent()
             model.initialCreation = false
@@ -77,7 +77,7 @@ class BrowseFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        model.scrollPosition = contentView?.saveScrollPosition() ?: 0
+        model.scrollPosition = content?.saveScrollPosition() ?: 0
     }
 
     override fun onResume() {
@@ -92,7 +92,7 @@ class BrowseFragment : Fragment() {
     private fun loadContent() {
         when (navigationMode) {
             NavigationMode.PATH -> {
-                val path = requireArguments().getString(PATH).orEmpty()
+                val path = arguments?.getString(PATH).orEmpty()
                 model.loadPath(path)
             }
             NavigationMode.RANDOM -> model.loadRandom()
@@ -128,21 +128,30 @@ class BrowseFragment : Fragment() {
         }
     }
 
-    private fun displayContent(items: List<CollectionItem>) {
-        val content: BrowseContent = when (getDisplayModeForItems(items)) {
-            DisplayMode.EXPLORER -> BrowseContentExplorer(requireContext(), model.api, model.playbackQueue)
-            DisplayMode.ALBUM -> BrowseContentAlbum(requireContext(), model.api, model.playbackQueue)
-            DisplayMode.DISCOGRAPHY -> {
+    private fun displayContent(items: List<CollectionItem>) = content.let {
+
+        val replaceContent = { c: BrowseContent ->
+            contentHolder.removeAllViews()
+            contentHolder.addView(c.root)
+            c.setOnRefreshListener(onRefresh)
+            content = c
+            c
+        }
+
+        val browseContent = when (getDisplayModeForItems(items)) {
+            DisplayMode.EXPLORER -> it as? BrowseContentExplorer ?: run {
+                replaceContent(BrowseContentExplorer(requireContext(), model.api, model.playbackQueue))
+            }
+            DisplayMode.ALBUM -> it as? BrowseContentAlbum ?: run {
+                replaceContent(BrowseContentAlbum(requireContext(), model.api, model.playbackQueue))
+            }
+            DisplayMode.DISCOGRAPHY -> it as? BrowseContentDiscography ?: run {
                 val sortAlbums = navigationMode == NavigationMode.PATH
-                BrowseContentDiscography(requireContext(), model.api, model.playbackQueue, sortAlbums)
+                replaceContent(BrowseContentDiscography(requireContext(), model.api, model.playbackQueue, sortAlbums))
             }
         }
-        content.updateItems(items)
-        content.setOnRefreshListener(onRefresh)
-        content.restoreScrollPosition(model.scrollPosition)
 
-        contentHolder.removeAllViews()
-        contentHolder.addView(content.root)
-        contentView = content
+        browseContent.updateItems(items)
+        browseContent.restoreScrollPosition(model.scrollPosition)
     }
 }

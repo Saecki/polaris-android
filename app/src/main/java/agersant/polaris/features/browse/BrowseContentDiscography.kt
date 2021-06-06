@@ -7,6 +7,7 @@ import agersant.polaris.databinding.ViewBrowseDiscographyBinding
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,8 +21,9 @@ internal class BrowseContentDiscography(
 ) : BrowseContent(context) {
 
     override val root: View
-    private val recyclerView: RecyclerView
+
     private val swipeRefresh: SwipyRefreshLayout
+    private val recyclerView: RecyclerView
     private val adapter: BrowseAdapter
 
     init {
@@ -31,14 +33,12 @@ internal class BrowseContentDiscography(
         swipeRefresh = binding.swipeRefresh
         recyclerView = binding.recyclerView
 
+        root.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+
         recyclerView.setHasFixedSize(true)
 
-        val callback: ItemTouchHelper.Callback = object : BrowseTouchCallback() {
-            override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-                super.onSelectedChanged(viewHolder, actionState)
-                swipeRefresh.isEnabled = (actionState != ItemTouchHelper.ACTION_STATE_SWIPE)
-            }
-        }
+        val callback = BrowseTouchCallback()
+        callback.setOnEnableRefresh(swipeRefresh::setEnabled)
         val itemTouchHelper = ItemTouchHelper(callback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
@@ -47,13 +47,9 @@ internal class BrowseContentDiscography(
     }
 
     override fun updateItems(items: List<CollectionItem>) {
+        swipeRefresh.isRefreshing = false
         val sortedItems = if (sortAlbums) items.sortedBy { it.year } else items
         adapter.updateItems(sortedItems)
-    }
-
-    override fun setOnRefreshListener(listener: OnRefreshListener?) {
-        swipeRefresh.isEnabled = listener != null
-        swipeRefresh.setOnRefreshListener { listener?.onRefresh() }
     }
 
     override fun saveScrollPosition(): Int {
@@ -63,5 +59,9 @@ internal class BrowseContentDiscography(
 
     override fun restoreScrollPosition(position: Int) {
         recyclerView.scrollToPosition(position)
+    }
+
+    override fun setOnRefreshListener(listener: OnRefreshListener) {
+        swipeRefresh.setOnRefreshListener { listener.onRefresh() }
     }
 }

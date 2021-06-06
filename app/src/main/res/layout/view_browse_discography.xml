@@ -1,31 +1,23 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="agersant.polaris.features.browse.BrowseContentExplorer">
+    app:srl_direction="both">
 
-    <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
-        android:id="@+id/swipe_refresh"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srl_direction="both">
+        android:clipToPadding="false"
+        android:paddingVertical="4dp"
+        app:fastScrollEnabled="true"
+        app:fastScrollHorizontalThumbDrawable="@drawable/scroll_thumb"
+        app:fastScrollHorizontalTrackDrawable="@drawable/scroll_track"
+        app:fastScrollVerticalThumbDrawable="@drawable/scroll_thumb"
+        app:fastScrollVerticalTrackDrawable="@drawable/scroll_track"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/view_browse_discography_item" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingVertical="4dp"
-            app:fastScrollEnabled="true"
-            app:fastScrollHorizontalThumbDrawable="@drawable/scroll_thumb"
-            app:fastScrollHorizontalTrackDrawable="@drawable/scroll_track"
-            app:fastScrollVerticalThumbDrawable="@drawable/scroll_thumb"
-            app:fastScrollVerticalTrackDrawable="@drawable/scroll_track"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/view_browse_discography_item" />
-
-    </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
-
-
-</RelativeLayout>
+</com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>

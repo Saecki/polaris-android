@@ -22,10 +22,7 @@ class BackdropLayout(context: Context, attrs: AttributeSet? = null) : Constraint
 
     private inner class OverlayView(context: Context) : View(context) {
         init {
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT,
-            )
+            layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             isVisible = false
             alpha = 0f
             z = 100f

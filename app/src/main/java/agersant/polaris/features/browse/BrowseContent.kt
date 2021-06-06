@@ -14,9 +14,9 @@ internal abstract class BrowseContent(protected val context: Context) {
 
     abstract fun updateItems(items: List<CollectionItem>)
 
-    open fun setOnRefreshListener(listener: OnRefreshListener?) {}
+    abstract fun saveScrollPosition(): Int
 
-    open fun saveScrollPosition() = 0
+    abstract fun restoreScrollPosition(position: Int)
 
-    open fun restoreScrollPosition(position: Int) {}
+    open fun setOnRefreshListener(listener: OnRefreshListener) {}
 }
