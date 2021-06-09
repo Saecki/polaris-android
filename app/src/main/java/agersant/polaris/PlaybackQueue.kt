@@ -5,8 +5,6 @@ import agersant.polaris.api.remote.DownloadQueue
 import android.content.Intent
 import androidx.preference.PreferenceManager
 import java.util.*
-import kotlin.math.max
-import kotlin.math.min
 
 class PlaybackQueue internal constructor() {
 
@@ -23,6 +21,7 @@ class PlaybackQueue internal constructor() {
         const val REMOVED_ITEM = "REMOVED_ITEM"
         const val REMOVED_ITEMS = "REMOVED_ITEMS"
         const val REORDERED_ITEMS = "REORDERED_ITEMS"
+        const val SHUFFLED_QUEUE = "SHUFFLED_QUEUE"
     }
 
     private var mContent = mutableListOf<CollectionItem>()
@@ -119,15 +118,9 @@ class PlaybackQueue internal constructor() {
         broadcast(REORDERED_ITEMS)
     }
 
-    fun move(fromPosition: Int, toPosition: Int) {
-        if (fromPosition == toPosition) {
-            return
-        }
-        val low = min(fromPosition, toPosition)
-        val high = max(fromPosition, toPosition)
-        val distance = if (fromPosition < toPosition) -1 else 1
-        Collections.rotate(mContent.subList(low, high + 1), distance)
-        broadcast(REORDERED_ITEMS)
+    fun shuffle() {
+        mContent.shuffle()
+        broadcast(SHUFFLED_QUEUE)
     }
 
     fun getItem(position: Int): CollectionItem {
@@ -177,7 +170,7 @@ class PlaybackQueue internal constructor() {
     }
 
     fun getNextItemToDownload(currentItem: CollectionItem?, offlineCache: OfflineCache, downloadQueue: DownloadQueue): CollectionItem? {
-        val currentIndex = max(0, mContent.indexOf(currentItem))
+        val currentIndex = maxOf(0, mContent.indexOf(currentItem))
 
         var bestScore = 0
         var bestItem: CollectionItem? = null

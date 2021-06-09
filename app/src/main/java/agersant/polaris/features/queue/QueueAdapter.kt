@@ -7,7 +7,6 @@ import agersant.polaris.api.API
 import agersant.polaris.api.local.OfflineCache
 import agersant.polaris.api.remote.DownloadQueue
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
@@ -31,7 +30,7 @@ internal class QueueAdapter(
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldItems[oldItemPosition] == playbackQueue.content[newItemPosition]
+            return oldItems[oldItemPosition].path == playbackQueue.content[newItemPosition].path
         }
     }
 

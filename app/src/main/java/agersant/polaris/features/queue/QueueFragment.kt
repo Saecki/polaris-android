@@ -14,16 +14,19 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import java.util.*
 
 class QueueFragment : Fragment() {
     private lateinit var adapter: QueueAdapter
@@ -41,8 +44,10 @@ class QueueFragment : Fragment() {
         val filter = IntentFilter()
         filter.addAction(PlaybackQueue.REMOVED_ITEM)
         filter.addAction(PlaybackQueue.REMOVED_ITEMS)
+        filter.addAction(PlaybackQueue.QUEUED_ITEM)
         filter.addAction(PlaybackQueue.QUEUED_ITEMS)
         filter.addAction(PlaybackQueue.OVERWROTE_QUEUE)
+        filter.addAction(PlaybackQueue.SHUFFLED_QUEUE)
         filter.addAction(PolarisPlayer.OPENING_TRACK)
         filter.addAction(PolarisPlayer.PLAYING_TRACK)
         filter.addAction(OfflineCache.AUDIO_CACHED)
@@ -58,6 +63,10 @@ class QueueFragment : Fragment() {
                     PlaybackQueue.REMOVED_ITEMS -> {
                         updateTutorial()
                     }
+                    PlaybackQueue.SHUFFLED_QUEUE -> {
+                        adapter.updateItems()
+                    }
+                    PlaybackQueue.QUEUED_ITEM,
                     PlaybackQueue.QUEUED_ITEMS -> {
                         adapter.updateItems()
                         updateTutorial()
@@ -142,7 +151,7 @@ class QueueFragment : Fragment() {
                 true
             }
             R.id.action_shuffle -> {
-                shuffle()
+                playbackQueue.shuffle()
                 true
             }
             R.id.action_ordering_sequence,
@@ -177,16 +186,6 @@ class QueueFragment : Fragment() {
         val oldCount = adapter.itemCount
         playbackQueue.clear()
         adapter.notifyItemRangeRemoved(0, oldCount)
-    }
-
-    private fun shuffle() {
-        val rng = Random()
-        val count = adapter.itemCount
-        for (i in 0..count - 2) {
-            val j = i + rng.nextInt(count - i)
-            playbackQueue.move(i, j)
-            adapter.notifyItemMoved(i, j)
-        }
     }
 
     private fun setOrdering(item: MenuItem) {
